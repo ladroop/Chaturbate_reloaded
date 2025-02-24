@@ -1,4 +1,4 @@
-Chaturbate reloaded userscript manual. V1.4.4
+Chaturbate reloaded userscript manual. V1.4.7
 
 
 *Settings menu (next to your user name where you can also set the dark mode).
@@ -125,11 +125,15 @@ The following info will be added:
 -Note field where you can write notes.(Typing "$" will show as the current date).
 -Link to a DM pop up.
 -Private show costs (only if private enabled).
--Private show recording. *
 -Minimum private time. *
--Spy on private enabled (only if spy enabled).
--Spy on private costs. *
--Fanclub member spy on private costs. (only if different from normal user spy on private costs).
+-Spy on private costs or disabled. 
+-Fanclub member spy on private costs. (only if different from normal user spy on private costs).*
+-Premium private show costs. (if premium is enabled) *
+-Minimum premium private time. *
+-Private show recording. *
+-Fanclub costs. (if fanclub enabled)
+-Broadcasters region. (Not if appear on network sites is "NO" and only if index was made when online).
+-Broadcasters nationality. * (Only if set)
 -Broadcaster status (only if exhibitionist).
 -Amount you tipped the last 24H (only if you tipped).
 -Video URL , copy to clipboard/update status (also when off-line and then it will only update the status).
@@ -142,16 +146,17 @@ The following info will be added:
 -Moderator (only if you're a moderator).
 -Low satisfaction score (only if low).
 -Number of users in the room (see below).
+-Last day online (only if offline). (this is in central American date !)   
 -Chat rules (click to read)(only if there are chat rules).
 -Appear on network sites (only if no).
 -A few links to some useful websites. (some are not there if appear on network sites is set to no)
 
-If alarm is turned on a alarm symbol wil appear in the browsers tab and the script will check the room
+If alarm is turned on a alarm symbol will appear in the browsers tab and the script will check the room
 status every minute. You can select alarm only, if the status changes an alarm will sound and the browser tab will
 show "ALARM" , or go to page if public. If the status changes to public, this can be from offline , private etc.,
 the room will be opened in a new tab (and the old tab will be closed). If you start the alarm while the room is public
 it must go to an other status first.
-In rare occations you pop-up blocker may prevent to room to be opened. Check you pop-up blocker settings.
+In rare occasions you pop-up blocker may prevent to room to be opened. Check you pop-up blocker settings.
 Turn it off to stop the alarm or click "reload info".
 
 If there are users in the room there is next to the number a link that will show the user list.
@@ -180,7 +185,7 @@ You can write notes, open DM window, follow/unfollow and it shows the video stat
 This status can be "offline" or "password_protected", if password_protected the room is online.
 You can set "check" on or off. If on it will check every minute if you can access the room.
 If you can the room will be opened in a new tab (and the old tab will be closed). 
-In rare occations you pop-up blocker may prevent to room to be opened. Check you pop-up blocker settings.
+In rare occasions you pop-up blocker may prevent to room to be opened. Check you pop-up blocker settings.
 A password room can also have banned your region or gender or you.
 In that case you will never have access (nothing will happen if the password is removed)
 and follow and DM will not work !
@@ -193,8 +198,10 @@ You can write notes.
 You see the video status.
 You can copy the video url to the clipboard (see below)and update the status.
 (this also updates the player)
+Broadcasters region. (Only if broadcaster appears on network sites and if index was made when online).
+Broadcasters nationality. (Only if set)
 Some links to useful websites.
-A link that will search for more info, it will try to find the thumbnail info and shows it on the page. THis
+A link that will search for more info, it will try to find the thumbnail info and shows it on the page. This
 only works if the room is public.
 
 

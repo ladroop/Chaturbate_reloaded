@@ -1,4 +1,4 @@
-Chaturbate reloaded userscript manual. V1.4.7
+Chaturbate reloaded userscript manual. V1.4.9
 
 
 *Settings menu (next to your user name where you can also set the dark mode).
@@ -65,7 +65,7 @@ and press it again to resume recording.
 Press "STOP RECORD" to stop the recording and save it to disk.
 -The video adjustments are not visible in the recording.
 -You can not close the video control popup while recording.
--The quality of the recordings are reasonable but not extreem good, for good recordings use 
+-The quality of the recordings are reasonable but not extreme good, for good recordings use 
 an external recorder (the script got many options to copy the video URL).
 
 Snapshots (in the context menu when you right click the video) will be saved as snapshot.jpg
@@ -137,7 +137,7 @@ The following info will be added:
 -Broadcaster status (only if exhibitionist).
 -Amount you tipped the last 24H (only if you tipped).
 -Video URL , copy to clipboard/update status (also when off-line and then it will only update the status).
--Alarm On/Off (see below , only on a profile only page and not an exhibitionist).
+-Alarm On/Off (see below , not an exhibitionist page).
 -Video status , on-line , off-line , etc.
 -Video quality ( according to chaturbate ...).
 -Hidden show message (only if in hidden show on a profile only page).
@@ -153,11 +153,15 @@ The following info will be added:
 
 If alarm is turned on a alarm symbol will appear in the browsers tab and the script will check the room
 status every minute. You can select alarm only, if the status changes an alarm will sound and the browser tab will
-show "ALARM" , or go to page if public. If the status changes to public, this can be from offline , private etc.,
-the room will be opened in a new tab (and the old tab will be closed). If you start the alarm while the room is public
-it must go to an other status first.
+show "ALARM" , or go to page if public.(only if not on a page with chat) If the status changes to public, this can be from offline,
+private etc., If the browser tab is on top it will open in that tab , if not it will open a new tab and the chaturbate 
+home page will be loaded in the old tab. (this sound complicated but a browser tab can not close itself of or bring itself 
+on top and the cam page will not load if it's not on top)
+If you start the "open room when public" alarm while the room is public it must go to an other status first.
 In rare occasions you pop-up blocker may prevent to room to be opened. Check you pop-up blocker settings.
 Turn it off to stop the alarm or click "reload info".
+Remember that when you are in a normal offline room the broadcaster sees you in the chatlist. 
+The broadcaster will not see you when you're on the special profile page.
 
 If there are users in the room there is next to the number a link that will show the user list.
 This list will show the users as in the chat user list and it also shows if they are a follower of the room.
@@ -184,27 +188,19 @@ You will be redirected to a only profile page.
 You can write notes, open DM window, follow/unfollow and it shows the video status.
 This status can be "offline" or "password_protected", if password_protected the room is online.
 You can set "check" on or off. If on it will check every minute if you can access the room.
-If you can the room will be opened in a new tab (and the old tab will be closed). 
-In rare occasions you pop-up blocker may prevent to room to be opened. Check you pop-up blocker settings.
+If you can access the room will be opened (See alarm function for it's behavior)
 A password room can also have banned your region or gender or you.
 In that case you will never have access (nothing will happen if the password is removed)
 and follow and DM will not work !
 
 *A room that banned your region or gender.
 
-You will have a video player if on-line or the last available picture.
-There is a button to open the video controls (see "room with video").
+You will have a mjpeg player (no sound) if on-line or the last available picture.
 You can write notes.
-You see the video status.
-You can copy the video url to the clipboard (see below)and update the status.
-(this also updates the player)
+You see and update the video status.(this also updates the player)
 Broadcasters region. (Only if broadcaster appears on network sites and if index was made when online).
 Broadcasters nationality. (Only if set)
 Some links to useful websites.
 A link that will search for more info, it will try to find the thumbnail info and shows it on the page. This
 only works if the room is public.
 
-
--CB will not provide the video URL and the script tries to make one based on the last room visited.
--If this url does not work visit a working room (can be done in an other tab) and try again.
--The new URL will become active in a few seconds or click "update status" to speed it up.

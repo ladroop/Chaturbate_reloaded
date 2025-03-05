@@ -59,9 +59,10 @@
 // @description:sk   Vylepšuje Chaturbate pridaním viacerých nových funkcií.
 // @description:sl   Poskytuje vám nový a vylepšený zážitok z chatrba.
 // @description:sv   Ger dig en ny och förbättrad chaturbate upplevelse.
-// @version        1.4.7
+// @version        1.4.9
 // @namespace      chaturbate_goes_Ladroop
 // @match          https://*chaturbate.com/*
+// @match          https://*.chaturbate.com/*
 // @exclude        https://secure.chaturbate.com/*
 // @exclude        https://*chaturbate.com/security/
 // @exclude        https://*chaturbate.com/apps/*
@@ -78,7 +79,7 @@
 
 (function() {
     'use strict';
-    var version = "1.4.7";
+    var version = "1.4.9";
     var scriptname="Chaturbate reloaded";
     var i=0;
     var n=0;
@@ -136,6 +137,7 @@
     var thisfap="";
     var fapbr="";
     var cimg = new Image();
+    var pimg = new Image();
     var usernoteslist = "";
     var stor="greg44609";
     var tour=domain+"in/?tour=4uT2&campaign=hgg5k&track=default";
@@ -192,17 +194,10 @@
             window.location.reload(true);
         },100);
     }
-    if (!localStorage.getItem("defaultplaylist")) {
-        localStorage.setItem("defaultplaylist","https://edge17-rtm.live.mmcdn.com/live-edge/amlst:XXX-sd-883752acca206f43dfba30fb6a37be0bab0e4cfdd07c3415f24f3146288b427a_trns_h264/playlist.m3u8");
-    }
     if (document.getElementsByClassName("dismiss_notice_tfa_and_email").length>0){
         document.getElementsByClassName("dismiss_notice_tfa_and_email")[0].click();
     }
-    setadstyle();
     setgenstyle();
-    if (roomname=="discover"){
-        setdiscoverstyle();
-    }
     getmessage();
     if (roomname=="my_collection"){
         if (document.getElementsByTagName("video").length>0){
@@ -224,6 +219,7 @@
         login=false;
     }
     getsaving();
+    refresher();
     if (roomname=="discover"){discoverpage=true;}
     if (roomname=="tags"){tagspage=true;}
     var siteversion=1;
@@ -508,32 +504,28 @@
         }else{
             document.getElementById("a1").style.left="3px";
         }
-        if (roomname=="discover"){
-            return;
+         if (roomname!="discover"){
+            document.body.classList.add("thumbpage");
+            setclass();
         }
-        if(document.getElementById("bigthumbstyle")!=null){document.getElementById("bigthumbstyle").remove();}
-        if(document.getElementById("bigmovestyle")!=null){document.getElementById("bigmovestyle").remove();}
-        if(document.getElementById("movestyle")!=null){document.getElementById("movestyle").remove();}
-        if(document.getElementById("nomovestyle")!=null){document.getElementById("nomovestyle").remove();}
-        if (thumbpage){
-            if(localStorage.getItem("zoomoff")){
-                setnomovestyle();
-            }else{
-                if(localStorage.getItem("bigthumb")){
-                    setbigmovestyle();
-                }else{
-                    setmovestyle();
-                }
+    }
+    function setclass(){
+        document.body.classList.remove("zoom");
+        document.body.classList.remove("bigzoom");
+        document.body.classList.remove("bigThumb");
+        if(localStorage.getItem("bigthumb")){
+            document.body.classList.add("bigThumb");
+        }
+        if(!localStorage.getItem("zoomoff")){
+            if(document.getElementById("main").classList.contains("roomPage")){
+                document.body.classList.add("zoom");
+                return;
             }
             if(localStorage.getItem("bigthumb")){
-                setbigthumbstyle();
+                document.body.classList.add("bigzoom");
+            }else{
+                document.body.classList.add("zoom");
             }
-            return;
-        }
-        if(localStorage.getItem("zoomoff")){
-            setnomovestyle();
-        }else{
-            setmovestyle();
         }
     }
 
@@ -541,16 +533,22 @@
         if (document.getElementById("a6").style.left=="3px"){
             document.getElementById("a6").style.left="25px";
             localStorage.setItem("bigthumb","foo");
-            setbigthumbstyle();
-            if(document.getElementById("movestyle")!=null){document.getElementById("movestyle").remove();setbigmovestyle();}
-        }else{
-            document.getElementById("a6").style.left="3px";
+        }else{ // staat right
+            document.getElementById("a6").style.left="3px";// set left
             localStorage.removeItem("bigthumb");
-            if(document.getElementById("bigthumbstyle")!=null){document.getElementById("bigthumbstyle").remove();}
-            if(document.getElementById("bigmovestyle")!=null){document.getElementById("bigmovestyle").remove();setmovestyle();}
         }
+        setclass();
     }
-
+    function zoomoff(){
+        if (document.getElementById("a1").style.left=="3px"){
+            document.getElementById("a1").style.left="25px";
+            localStorage.setItem("zoomoff","foo");
+        }else{
+            document.getElementById("a1").style.left="3px";
+            localStorage.removeItem("zoomoff");
+        }
+        setclass();
+    }
     function hidemt(){
         if (document.getElementById("a5").style.left=="3px"){
             document.getElementById("a5").style.left="25px";
@@ -585,24 +583,6 @@
         }else{
             document.getElementById("a2").style.left="3px";
             localStorage.removeItem("animationoff");
-        }
-    }
-    function zoomoff(){
-        if (document.getElementById("a1").style.left=="3px"){
-            document.getElementById("a1").style.left="25px";
-            localStorage.setItem("zoomoff","foo");
-            if (document.getElementById("movestyle")!=null){document.getElementById("movestyle").remove();}
-            if (document.getElementById("bigmovestyle")!=null){document.getElementById("bigmovestyle").remove();}
-            setnomovestyle();
-        }else{
-            document.getElementById("a1").style.left="3px";
-            localStorage.removeItem("zoomoff");
-            if (document.getElementById("nomovestyle")!=null){document.getElementById("nomovestyle").remove();}
-            if (document.getElementById("bigthumbstyle")!=null){
-                setbigmovestyle();
-            }else{
-                setmovestyle();
-            }
         }
     }
 
@@ -806,9 +786,6 @@
     }
 
     function dothumbpagethings(){
-        if (!discoverpage){
-            refresher();
-        }
         buildnotepop();
         getnoteslist();
         return;
@@ -842,75 +819,28 @@
             ".BioContents{position:relative !important}"+
             ".bioContentText div{background-color:rgba(0, 0, 0, 0) !important}"+
             ".theme-external select{background-color: #dde9f5 !important; color:#5e81a4 !important; border-color:#8bb3da !important}"+
+            ".profplayer{z-index:99;position:absolute;top:10px;right:10px;border:1px solid rgb(221, 221, 221);border-radius:4px;box-shadow:0px 0px 32px rgba(0, 0, 0, 0.32)}"+
+            ".darkmode .profplayer{z-index:99;position:absolute;top:10px;right:10px;border:1px solid rgb(29, 29, 29);border-radius:4px;box-shadow:0px 0px 32px rgba(255, 255, 255, 0.22)}"+
             ".darkmode select{background-color: #202c39 !important; color:#b3b3b3 !important; border-color:#2d3e50 !important}"+
             "#proftext {width: 200px; height: 45px; line-height: 14px; border-width: 1px; border-style: solid; border-color: #acacac; border-radius: 4px; padding: 7px 8px; overflow: auto;background-color: rgb(230, 230, 230);color:#000;min-width:200px;min-height:45px}"+
             ".darkmode #proftext{width: 200px; height: 45px; line-height: 14px; border-width: 1px; border-style: solid; border-color: #2d3e50; border-radius: 4px; padding: 7px 8px; overflow: auto;background-color: rgb(20,20,20);color:#fff;min-width:200px;min-height:45px}"+
             ".cbLogo {display:none !important}"+
             ".popclass {background-color:rgb(255, 255, 211)}"+
-            ".darkmode .popclass {background-color:rgb(30, 30, 10)}";
-        document.getElementsByTagName('head')[0].appendChild(style);
-    }
-
-    function setbigthumbstyle(){
-        var style = document.createElement('style');
-        style.id="bigthumbstyle";
-        style.setAttribute('type', 'text/css');
-        style.textContent = "ul.list{grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)) !important}";
-        document.getElementsByTagName('head')[0].appendChild(style);
-    }
-
-    function setmovestyle(){
-        var style = document.createElement('style');
-        style.id="movestyle";
-        style.setAttribute('type', 'text/css');
-        style.textContent = ".content{overflow: visible; !important ;margin-right:33px !important;margin-left:33px !important}"+
-            ".followedDropdown{z-index:50 !important}"+
-            ".list{overflow: visible !important}"+
-            ".MoreRooms{overflow: visible !important}"+
-            ".roomCard {transition: .3s}"+
-            ".roomCard:hover {transform: scale(1.37);border-color:red;z-index:20}";
-        document.getElementsByTagName('head')[0].appendChild(style);
-    }
-
-    function setbigmovestyle(){
-        var style = document.createElement('style');
-        style.id="bigmovestyle";
-        style.setAttribute('type', 'text/css');
-        style.textContent = ".content{overflow: visible; !important ;margin-right:33px !important;margin-left:33px !important}"+
-            ".followedDropdown{z-index:50 !important}"+
-            ".list{overflow: visible !important}"+
-            ".MoreRooms{overflow: visible !important}"+
-            ".roomCard {transition: .3s}"+
-            ".roomCard:hover {transform: scale(1.23);border-color:red;z-index:20}";
-        document.getElementsByTagName('head')[0].appendChild(style);
-    }
-
-    function setnomovestyle(){
-        var style = document.createElement('style');
-        style.id="nomovestyle";
-        style.setAttribute('type', 'text/css');
-        style.textContent =".content{overflow: visible; !important ;margin-right:33px !important;margin-left:33px !important}"+
-            ".roomCard {transition: .1s}"+
-            ".roomCard:hover {border-color:red}";
-        document.getElementsByTagName('head')[0].appendChild(style);
-    }
-
-    function setdiscoverstyle(){
-        var style = document.createElement('style');
-        style.setAttribute('type', 'text/css');
-        style.textContent =".roomCard {transition: .1s}"+
-            ".roomCard:hover {border-color:red}";
-        document.getElementsByTagName('head')[0].appendChild(style);
-    }
-
-    function setadstyle(){
-        var style = document.createElement('style');
-        style.setAttribute('type', 'text/css');
-        style.textContent = ".ad {padding: 0px;overflow:hidden; font-weight: bold;color:white;border-radius:5px}"+
+            ".darkmode .popclass {background-color:rgb(30, 30, 10)}"+
+            ".ad {padding: 0px;overflow:hidden; font-weight: bold;color:white;border-radius:5px}"+
             ".adinfo {position: relative; display: flex; height: 100%; width: 940px; right:0px}"+
             ".adinfo {transition: 1.0s ease-in-out}"+
             ".adinfo:hover {right: 472px }"+
-            ".adscriptinfo {display:block;height:100%;width:468px}";
+            ".adscriptinfo {display:block;height:100%;width:468px}"+
+            ".bigThumb ul.list{grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)) !important}"+
+            ".roomCard {transition: .5s}"+
+            ".roomCard:hover {border-color:red;z-index:20}"+
+            ".thumbpage .content{overflow: visible; !important ;margin-right:33px !important;margin-left:33px !important}"+
+            ".followedDropdown{z-index:50 !important}"+
+            ".list{overflow: visible !important}"+
+            ".MoreRooms{overflow: visible !important}"+
+            ".zoom .roomCard:hover {transform: scale(1.37)}"+
+            ".bigzoom .roomCard:hover {transform: scale(1.23)}";
         document.getElementsByTagName('head')[0].appendChild(style);
     }
 
@@ -1491,7 +1421,7 @@
         if((document.location.href.indexOf("spy-on-cams")==-1)&&(document.location.href.indexOf("followed-cams")==-1)&&(document.location.href.indexOf("/current_app_use/")==-1)){
             var newelem=document.createElement('li');
             newelem.id="subselection";
-            var data='<form><select class="subsel" id="subsel" style="margin: 0px 0px 0px 0px; border-radius: 4px 4px 0px 0px;padding: 5px 1px 4px 12px; font-weight: 400; font-size: 13px; font-family: \'UbuntuMedium\',Arial,Helvetica,sans-serif;" >'+
+            var data='<form><select id="subsel" style="margin: 0px 0px 0px 0px; border-radius: 4px 4px 0px 0px;padding: 5px 1px 4px 12px; font-weight: 400; font-size: 13px; font-family: \'UbuntuMedium\',Arial,Helvetica,sans-serif;" >'+
                 '<option value="/XX-cams">ALL CAMS IN CATEGORY</option>'+
                 '<option value="/exhibitionist-cams/XX">EXHIBITIONIST CAMS</option>'+
                 '<option value="/gaming-cams/XX">GAMING CAMS</option>'+
@@ -1571,9 +1501,6 @@
         var place2=document.querySelector('[data-paction="BroadcasterFeedback"]');
         if(ppage){
             place2=document.getElementsByClassName("tabBar")[0];
-        }
-        if (noaccess){
-               place2=document.getElementsByClassName("top-section")[0];
         }
         var newelem="";
         if(ppage){
@@ -1913,6 +1840,7 @@
         }
         document.getElementById("vcontr").style.display="block";
         if (!vnode.src){
+            recstop();
             document.getElementById("vcontr").style.display="none";
             document.getElementById("controls").style.display="none";
         }
@@ -2155,9 +2083,6 @@
         }
         if (room_status != "offline"){
             hls_source=data.hls_source;
-            if (hls_source!=""){
-                localStorage.setItem("defaultplaylist",hls_source.split("?")[0].replace(roomname,"XXX"));
-            }
             videoSrc=hls_source;
             navigator.clipboard.writeText(hls_source);
             var vidqual=data.quality.quality;
@@ -2165,11 +2090,9 @@
             wprof("Video quality:",vidqual+'<font color=#CC0000 id="vstatus"></font>');
         }
         wprof("Video:",'<div id="rstatus">'+room_status+'</div>');
-        if (ppage){
-            if (data.is_age_verified){
-                wprof("Alarm:","<div id='alarm'><div>");
-                makealarm();
-            }
+        if (data.is_age_verified){
+            wprof("Alarm:","<div id='alarm'><div>");
+            makealarm();
         }
         wprof("Video Url:","<a href=# id='hls'>Click to copy to clipboard/Update status</a>");
         document.getElementById("hls").addEventListener("click",function(){getnewhls(!noaccess,true);});
@@ -2247,11 +2170,16 @@
             });
     }
 
-    function makealarm(){
+       function makealarm(){
         var newelem=document.createElement('span');
-        newelem.innerHTML="Off <input type='range' id='alrm' min=0 max=1 value=0 style='width: 35px;height:auto;cursor: pointer'> On || Alarm only <input type='range' id='alrmtype' min=0 max=1 value=0 style='width: 35px;height:auto;cursor: pointer'> Go to page if public";
+        newelem.innerHTML="Off <input type='range' id='alrm' min=0 max=1 value=0 style='width: 35px;height:auto;cursor: pointer'> On <span id='aonly'>|| Alarm only <input type='range' id='alrmtype' min=0 max=1 value=0 style='width: 35px;height:auto;cursor: pointer'> Go to page if public</span>";
         document.getElementById("alarm").appendChild(newelem);
         document.getElementById("alrm").addEventListener("change",setalrm);
+        if(document.querySelector('[data-testid="offline-content-container"]')){
+            if(document.querySelector('[data-testid="offline-content-container"]').style.display=="none"){
+                document.getElementById("aonly").style.display="none";
+            }
+        }
         document.title=ctitle;
     }
 
@@ -2549,27 +2477,35 @@
     }
 
     function createimage(){
-        if (!ppage&&!noaccess){return;}
+        if (!ppage&&!noaccess){return;} // only on p and no access rooms
         hls.detachMedia();
         if (document.getElementById("profimg")){document.getElementById("profimg").remove();}
-        if (document.getElementById("vstatus")){document.getElementById("vstatus").innerHTML="";}
-        if ((room_status=="public")||(room_status.indexOf("watching")!=-1)){
-            if (errors<4){
-                if (!document.getElementById("profplayer")){
-                    makevidplayer();
-                }
-                startvid();
-            }else{
-                document.getElementById("vstatus").innerHTML=" !!Video error!!";
-                setTimeout(createimage, 10000);
-            }
-            return;
+        if (document.getElementById("profjpgimg")){
+            pimg.removeEventListener("load",regetimgprof);
+            pimg.removeEventListener("error",errorimgprof);
+            document.getElementById("profjpgimg").remove();
         }
-        if (document.getElementById("profplayer")){
-            document.removeEventListener("visibilitychange",vidpause);
-            document.getElementById("profplayer").remove();
-            document.getElementById("controls").style.display="none";
-            document.getElementById("vcontr").style.display="none";
+        if (document.getElementById("vstatus")){document.getElementById("vstatus").innerHTML="";}
+        if (videoSrc!=""){
+            if ((room_status=="public")||(room_status.indexOf("watching")!=-1)){
+                if (errors<4){
+                    if (!document.getElementById("profplayer")){
+                        makevidplayer();
+                    }
+                    startvid();
+                }else{
+                    document.getElementById("vstatus").innerHTML=" !!Video error please wait!!";
+                    removevidplayer();
+                    makejpgplayer();
+                    setTimeout(createimage, 10000);
+                }
+                return;
+            }
+        }
+        removevidplayer();
+        if ((videoSrc=="")&&(room_status=="public")){
+            makejpgplayer();
+            return;
         }
         var url="https://jpeg.live.mmcdn.com/minifwap/"+roomname+".jpg";
         fetch(url,{
@@ -2579,7 +2515,8 @@
                 response.blob().then(
                     function(rawimg){
                         var imgsize=rawimg.size;
-                        if ((imgsize<4800)||(imgsize>4850)){
+                        console.log(imgsize);
+                        if (((imgsize<9500)||(imgsize>9510))&&((imgsize<4800)||(imgsize>4850))){
                             makeimg();
                         }else{
                             makecrd();
@@ -2589,43 +2526,66 @@
         );
     }
 
+    function removevidplayer(){
+        if (document.getElementById("profplayer")){
+            document.removeEventListener("visibilitychange",vidpause);
+            document.getElementById("profplayer").remove();
+            document.getElementById("controls").style.display="none";
+            document.getElementById("vcontr").style.display="none";
+        }
+    }
+
     function makecrd(){
         if (noaccess){return;}
         if (data.summary_card_image==""){return;}
         var newelem=document.createElement('img');
         newelem.src=data.summary_card_image;
+        newelem.className="profplayer";
         newelem.id="profimg";
-        newelem.style.zIndex="99";
-        newelem.style.position="absolute";
         newelem.style.height="480px";
         newelem.style.maxWidth="854px";
-        newelem.style.top="10px";
-        newelem.style.right="10px";
-        newelem.style.border="1px solid rgb(221, 221, 221)";
-        newelem.style.borderRadius="4px";
-        newelem.style.boxShadow="0px 0px 32px rgba(0, 0, 0, 0.32)";
         document.querySelector('[data-testid="room-bio-tab-contents"]').appendChild(newelem);
     }
 
     function makeimg(){
         var newelem=document.createElement('img');
         newelem.src="https://jpeg.live.mmcdn.com/minifwap/"+roomname+".jpg";
+        newelem.className="profplayer";
         newelem.id="profimg";
-        newelem.style.zIndex="99";
-        newelem.style.position="absolute";
         newelem.style.height="270px";
         newelem.style.width="480px";
-        newelem.style.top="10px";
-        newelem.style.right="10px";
-        newelem.style.border="1px solid rgb(221, 221, 221)";
-        newelem.style.borderRadius="4px";
-        newelem.style.boxShadow="0px 0px 32px rgba(0, 0, 0, 0.32)";
         document.querySelector('[data-testid="room-bio-tab-contents"]').appendChild(newelem);
+    }
+    function makejpgplayer(){
+        var newelem=document.createElement('img');
+        newelem.src="https://jpeg.live.mmcdn.com/minifwap/"+roomname+".jpg";
+        newelem.className="profplayer";
+        newelem.id="profjpgimg";
+        newelem.style.width="854px";
+        newelem.style.height="480px";
+        document.querySelector('[data-testid="room-bio-tab-contents"]').appendChild(newelem);
+        pimg.addEventListener("load",regetimgprof);
+        pimg.addEventListener("error",errorimgprof);
+        pimg.src = "https://jpeg.live.mmcdn.com/stream?room="+roomname+"&f="+ new Date().getTime();
+    }
+
+    function errorimgprof(){
+        getnewhls(true,false,1);
+    }
+
+    function regetimgprof(){
+        if (document.visibilityState!="visible"){
+            setTimeout(regetimgprof,2000);
+        }else{
+            document.getElementById("profjpgimg").src=pimg.src;
+            setTimeout(function(){pimg.src = "https://jpeg.live.mmcdn.com/stream?room="+roomname+"&f="+ new Date().getTime();}, 50);
+        }
     }
 
     function makevidplayer(){
         var control=localStorage.getItem("videoControls");
         var newelem=document.createElement('video');
+        newelem.className="profplayer";
         newelem.id="profplayer";
         newelem.controls=true;
         newelem.autoplay=true;
@@ -2633,15 +2593,8 @@
         var volume=control.split(":")[1].split(",")[0];
         newelem.volume=volume/100;
         newelem.poster="https://jpeg.live.mmcdn.com/stream?room="+roomname+"&f="+ new Date().getTime();
-        newelem.style.zIndex="99";
-        newelem.style.position="absolute";
         newelem.style.width="854px";
         newelem.style.height="480px";
-        newelem.style.top="10px";
-        newelem.style.right="10px";
-        newelem.style.border="1px solid rgb(221, 221, 221)";
-        newelem.style.borderRadius="4px";
-        newelem.style.boxShadow="0px 0px 32px rgba(0, 0, 0, 0.32)";
         document.querySelector('[data-testid="room-bio-tab-contents"]').appendChild(newelem);
         document.addEventListener("visibilitychange",vidpause);
     }
@@ -2664,7 +2617,9 @@
         if (document.hidden){
             hls.detachMedia();
         }else{
-            startvid();
+            if (!document.hidden){
+                startvid();
+            }
         }
     }
 
@@ -3024,7 +2979,9 @@
             function(response) {
                 if (response.status == 200){
                     forceopen(roomname);
+                    return;
                 }
+                checkpwalarm();
             });
         },60000);
     }
@@ -3032,13 +2989,17 @@
     function forceopen(room){
         if (document.hasFocus()){
             document.location.href=domain+room;
+            return;
         }
         var mywindow=window.open(domain+room,"");
-        if(mywindow!=null){
-            mywindow.focus();
-            window.close();
-        }
-        document.location.href=domain+room;
+        setTimeout(function(){
+            if(mywindow!=null){
+                mywindow.focus();
+                window.open(domain, '_self');
+                return;
+            }
+            document.location.href=domain+room;
+        },250);
     }
 
     function opendm3(that){
@@ -3080,7 +3041,6 @@
         newtable.appendChild(newtr);
         document.getElementsByClassName("BaseRoomContents")[0].appendChild(newelem);
         putinlinks();
-        makevidcontrol();
         getnewhls(true,false,1);
         setTimeout(function(){
             if (room_status!="public"){
@@ -3098,7 +3058,7 @@
         wprof("Find:","<a href='https://camgirlfinder.net/models?m="+roomname+"&p=cb&g=a' rel=noreferrer target='_new'>Open in camgirlfinder</a>");
         wprof("Statistics:","<a href='https://statbate.com/search/1/"+roomname+"' rel=noreferrer target='_new'>Open in statbate</a>");
         wprof("Schedule:","<a href='https://www.cbhours.com/user/"+roomname+".html' rel=noreferrer target='_new'>Open in cbhours</a>");
-        wprof("Video Url:","<a href=# id='hls'>Click to copy to clipboard/Update status</a>");
+        wprof("Video status:","<a href=# id='hls'>Update status</a>");
         document.getElementById("hls").addEventListener("click",function(){getnewhls(true,true,1);});
         wprof("Video:",'<div id="rstatus">'+room_status+'</div>');
         wprof("Nationality:","<span id='flaginfo'>wait....</span>");
@@ -3111,7 +3071,6 @@
             getnotes();
         }
     }
-
     function moreinfo(){
         if (room_status!="public"){
             document.getElementById("moreinfo").innerHTML="Room is not public.";
@@ -3349,7 +3308,10 @@
         }
         var url=domain+"get_edge_hls_url_ajax/";
         var csrftoken= readCookie("csrftoken");
-        var edge=localStorage.getItem("defaultplaylist").split("/")[2];
+        var edge="";
+        if (videoSrc!=""){
+            edge=videoSrc.split("/")[2];
+        }
         var data = new FormData();
         data.append( "room_slug", roomname );
         if (next==1){
@@ -3374,7 +3336,6 @@
                     getnewhls(false,clicked,next);
                     return;
                 }
-                if(clicked){navigator.clipboard.writeText(localStorage.getItem("defaultplaylist").replace("XXX",roomname));}
                 document.getElementById("rstatus").innerHTML="Error";
                 document.getElementById("hls").innerHTML=oldmsg;
                 hlsfetching=false;
@@ -3383,17 +3344,14 @@
             response.json().then(function(data){
                 if(data.url !=""){
                     document.getElementById("rstatus").innerHTML=data.room_status;
-                    if(clicked){navigator.clipboard.writeText(data.url);}
-                    localStorage.setItem("defaultplaylist",data.url.split("?")[0].replace(roomname,"XXX"));
+                    if (clicked){navigator.clipboard.writeText(data.url);}
                 }else{
                     document.getElementById("rstatus").innerHTML=data.room_status;
-                    if(clicked){navigator.clipboard.writeText(localStorage.getItem("defaultplaylist").replace("XXX",roomname));}
                 }
                 document.getElementById("hls").innerHTML=oldmsg;
                 roomstatus=data.room_status;
                 room_status=data.room_status;
                 videoSrc=data.url;
-                if (noaccess&&(data.url=="")){videoSrc=localStorage.getItem("defaultplaylist").replace("XXX",roomname);}
                 hlsfetching=false;
                 if (next==1){createimage();}
                 if (next==2){testalarm2();}

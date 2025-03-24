@@ -59,7 +59,7 @@
 // @description:sk   Vylepšuje Chaturbate pridaním viacerých nových funkcií.
 // @description:sl   Poskytuje vám nový a vylepšený zážitok z chatrba.
 // @description:sv   Ger dig en ny och förbättrad chaturbate upplevelse.
-// @version        1.4.9
+// @version        1.5.1
 // @namespace      chaturbate_goes_Ladroop
 // @match          https://*chaturbate.com/*
 // @match          https://*.chaturbate.com/*
@@ -71,16 +71,21 @@
 // @exclude        https://*chaturbate.com/fullvideo/*
 // @exclude        https://*chaturbate.com/accounts/followers/*
 // @require        https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js
-// @grant          none
+// @grant          window.focus
+// @grant          GM_xmlhttpRequest
+// @connect        translate.googleapis.com
 // @run-at         document-end
 // @license	       MIT
 // @copyright      2025 Ladroop
+// @downloadURL https://update.sleazyfork.org/scripts/499685/Chaturbate%20reloaded.user.js
+// @updateURL https://update.sleazyfork.org/scripts/499685/Chaturbate%20reloaded.meta.js
 // ==/UserScript==
 
 (function() {
     'use strict';
-    var version = "1.4.9";
-    var scriptname="Chaturbate reloaded";
+    var scinfo=GM_info;
+    var version=scinfo.script.version;
+    var scriptname=scinfo.script.name;
     var i=0;
     var n=0;
     var currpage=document.location.href;
@@ -125,11 +130,6 @@
     var observerConfig8 ={attributes : true, attributeFilter : ['class'] };
     var observer3 = new MutationObserver(varea);
     var observerConfig3 = {childList: true, subtree: true};
-    var pmobserver = new MutationObserver(tabpm);
-    var pmobserver2 = new MutationObserver(tabpm);
-    var pmobserverConfig = {childList: true};
-    var pmobservenode="";
-    var pmobservenode2="";
     var tabblink=false;
     var ctitle=document.title;
     var container="";
@@ -144,6 +144,7 @@
     var note='<svg style="height: 2.0em; width: 2.0em;" viewBox="0 0 12 12" xmlns="https://www.w3.org/2000/svg"><path fill="hsla(0, 100%, 50%, 0.8)" d="M5.5 2.00002H2C1.73478 2.00002 1.48043 2.10537 1.29289 2.29291C1.10536 2.48044 1 2.7348 1 3.00002V10C1 10.2652 1.10536 10.5196 1.29289 10.7071C1.48043 10.8947 1.73478 11 2 11H9C9.26522 11 9.51957 10.8947 9.70711 10.7071C9.89464 10.5196 10 10.2652 10 10V6.50002" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.25 1.24985C9.44891 1.05094 9.7187 0.939194 10 0.939194C10.2813 0.939194 10.5511 1.05094 10.75 1.24985C10.9489 1.44877 11.0607 1.71855 11.0607 1.99985C11.0607 2.28116 10.9489 2.55094 10.75 2.74985L6 7.49985L4 7.99985L4.5 5.99985L9.25 1.24985Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
     var nonote='<svg style="height: 2.0em; width: 2.0em;" viewBox="0 0 12 12" xmlns="https://www.w3.org/2000/svg"><path fill="hsla(197, 10%, 98%, 0.3)" d="M5.5 2.00002H2C1.73478 2.00002 1.48043 2.10537 1.29289 2.29291C1.10536 2.48044 1 2.7348 1 3.00002V10C1 10.2652 1.10536 10.5196 1.29289 10.7071C1.48043 10.8947 1.73478 11 2 11H9C9.26522 11 9.51957 10.8947 9.70711 10.7071C9.89464 10.5196 10 10.2652 10 10V6.50002" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.25 1.24985C9.44891 1.05094 9.7187 0.939194 10 0.939194C10.2813 0.939194 10.5511 1.05094 10.75 1.24985C10.9489 1.44877 11.0607 1.71855 11.0607 1.99985C11.0607 2.28116 10.9489 2.55094 10.75 2.74985L6 7.49985L4 7.99985L4.5 5.99985L9.25 1.24985Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
     var notegrey='<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 12 12" role="img"><path stroke="#48484E" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.5 2H2a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V6.5"></path><path stroke="#48484E" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.25 1.25a1.06 1.06 0 0 1 1.5 1.5L6 7.5 4 8l.5-2z"></path></svg>';
+    var tr2="https://www.chaturbate.com/translate_a/";
     if (currpage.indexOf(stor)!=-1){document.location.href=domain;}
     var discoverpage=false;
     var thumbpage=false;
@@ -153,8 +154,12 @@
     var data="";
     var room_status="";
     var videoSrc="";
+    var cmaf=true;
+    var stream;
+    var vidwidth=854;
     var hls = new Hls();
-    var errors=0;
+    var gojpg=false;
+    var fatalerror=0;
     var recording=false;
     var recpause=false;
     var mediaRecorder;
@@ -179,6 +184,7 @@
     var c7=0;
     var c7a=100;
     var c8=0;
+    var c10=0;
     var firstentry=true;
     var twaiting=false;
     var chatrules="";
@@ -201,12 +207,12 @@
     getmessage();
     if (roomname=="my_collection"){
         if (document.getElementsByTagName("video").length>0){
-            savedprvdownload();
+            savedprvdownload();// >>>>>>>>>> end
         }
         return;
     }
     if (roomname=="photo_videos"){
-        collectiondownload();
+        collectiondownload();// >>>>>>>>>>>>end
         return;
     }
     var supporter=true;
@@ -287,17 +293,13 @@
             setTimeout(function(){test2();}, 100);
         }else{
             n++;
-            if (n==100){
-                n=0;
-                lastchange();
-                return;
-            }
+            if (n==100){return;}
             setTimeout(function(){test();}, 100);
         }
     }
 
     function test2(){
-        if (n==100){n=0;lastchange();return;}
+        if (n==100){return;}
         if (container.innerHTML.indexOf("Loading…")!=-1){
             n++;
             setTimeout(function(){test2();}, 100);
@@ -309,7 +311,7 @@
 
     function test3(){
         n++;
-        if (n==100){n=0;lastchange();return;}
+        if (n==100){return;}
         setTimeout(function(){
             if (container.getElementsByTagName("table").length>0){
                 if(!ppage){
@@ -326,22 +328,19 @@
             }
         }, 100);
     }
-    function lastchange(){
-        if (document.visibilityState!="visible"){
-            document.addEventListener("visibilitychange",onemore);
-        }
-    }
-    function onemore(){
-        document.removeEventListener("visibilitychange",onemore);
-        test();
-    }
-
     function hidemtenter(){
         if (!localStorage.getItem("hidemt")){return;}
+        var toptabs=document.getElementsByClassName("gender-tab");
+        for (n=0; n<toptabs.length; n++){
+            if (toptabs[n].href){
+                toptabs[n].style.display="block";
+            }
+        }
+        roomname=document.location.href.split("/")[3];
+        if (roomname=="followed-cams"){return;}
         if ((roomname=="male-cams")||(roomname=="trans-cams")){
             document.location.href=domain;
         }
-        var toptabs=document.getElementsByClassName("gender-tab");
         for (n=0; n<toptabs.length; n++){
             if (toptabs[n].href){
                 if (toptabs[n].href.indexOf("/male-")!=-1){
@@ -533,8 +532,8 @@
         if (document.getElementById("a6").style.left=="3px"){
             document.getElementById("a6").style.left="25px";
             localStorage.setItem("bigthumb","foo");
-        }else{ // staat right
-            document.getElementById("a6").style.left="3px";// set left
+        }else{
+            document.getElementById("a6").style.left="3px";
             localStorage.removeItem("bigthumb");
         }
         setclass();
@@ -780,7 +779,6 @@
         if (document.getElementsByTagName("video").length>0){
             getvid();
             vreset();
-            pmlistner();
             iagree();
         }
     }
@@ -821,10 +819,16 @@
             ".theme-external select{background-color: #dde9f5 !important; color:#5e81a4 !important; border-color:#8bb3da !important}"+
             ".profplayer{z-index:99;position:absolute;top:10px;right:10px;border:1px solid rgb(221, 221, 221);border-radius:4px;box-shadow:0px 0px 32px rgba(0, 0, 0, 0.32)}"+
             ".darkmode .profplayer{z-index:99;position:absolute;top:10px;right:10px;border:1px solid rgb(29, 29, 29);border-radius:4px;box-shadow:0px 0px 32px rgba(255, 255, 255, 0.22)}"+
+            ".profdivplayer{z-index:99;position:absolute;top:10px;right:10px;overflow:hidden;resize:horizontal;direction:rtl;border:1px solid rgb(221, 221, 221);border-radius:4px;box-shadow:0px 0px 32px rgba(0, 0, 0, 0.32);background-color:rgba(0, 0, 0, 0.32)}"+
+            ".darkmode .profdivplayer{z-index:99;position:absolute;top:10px;right:10px;overflow:hidden;resize:horizontal;direction:rtl;border:1px solid rgb(29, 29, 29);border-radius:4px;box-shadow:0px 0px 32px rgba(255, 255, 255, 0.22);background-color:rgba(255, 255, 255, 0.22)}"+
             ".darkmode select{background-color: #202c39 !important; color:#b3b3b3 !important; border-color:#2d3e50 !important}"+
+            ".tinput {background-color: #dde9f5 !important; color:#5e81a4 !important; border-color:#8bb3da !important}"+
+            ".darkmode .tinput {background-color: #202c39 !important; color:#b3b3b3 !important; border-color:#2d3e50 !important}"+
             "#proftext {width: 200px; height: 45px; line-height: 14px; border-width: 1px; border-style: solid; border-color: #acacac; border-radius: 4px; padding: 7px 8px; overflow: auto;background-color: rgb(230, 230, 230);color:#000;min-width:200px;min-height:45px}"+
             ".darkmode #proftext{width: 200px; height: 45px; line-height: 14px; border-width: 1px; border-style: solid; border-color: #2d3e50; border-radius: 4px; padding: 7px 8px; overflow: auto;background-color: rgb(20,20,20);color:#fff;min-width:200px;min-height:45px}"+
             ".cbLogo {display:none !important}"+
+            ".translated {background-color:#FFFFE0;color:red;margin-left:10px;padding:0px 5px 0px 5px;text-shadow:0px 0px !important}"+
+            ".darkmode .translated {background-color:#000020;color:red;margin-left:10px;padding:0px 5px 0px 5px;text-shadow:0px 0px !important}"+
             ".popclass {background-color:rgb(255, 255, 211)}"+
             ".darkmode .popclass {background-color:rgb(30, 30, 10)}"+
             ".ad {padding: 0px;overflow:hidden; font-weight: bold;color:white;border-radius:5px}"+
@@ -920,7 +924,7 @@
         var genclass="";
         var tags=document.querySelectorAll('[data-testid="room-card-image"]');
         for (n=0; n<tags.length; n++){
-            if (localStorage.getItem("hidemt")){
+            if ((localStorage.getItem("hidemt"))&&(roomname!="followed-cams")){
                 if(tags[n].parentNode.parentNode.querySelector('[data-testid="room-card-gender"]')){
                     genclass=tags[n].parentNode.parentNode.querySelector('[data-testid="room-card-gender"]').classList;
                     if ((genclass.contains("genderm"))||(genclass.contains("genders"))){
@@ -1463,18 +1467,8 @@
         document.location.href=document.getElementById("subsel").options[document.getElementById("subsel").selectedIndex].value;
     }
 
-    function pmlistner(){
-        setTimeout(function(){
-            pmobservenode=document.getElementById('pm-tab-default');
-            pmobservenode2=document.getElementById('pm-tab-fvm');
-            pmobserver.observe(pmobservenode, pmobserverConfig);
-            pmobserver2.observe(pmobservenode2, pmobserverConfig);
-        }, 2000);
-    }
-
     function tabpm(){
         if (document.visibilityState=="visible"){return;}
-        if ((pmobservenode.getElementsByTagName("span")[0].innerHTML=="PM")||(pmobservenode2.getElementsByTagName("span")[0].innerHTML=="PM")){return;}
         if (tabblink==true){return;}
         tabblink=true;
         tabblinker();
@@ -1501,6 +1495,9 @@
         var place2=document.querySelector('[data-paction="BroadcasterFeedback"]');
         if(ppage){
             place2=document.getElementsByClassName("tabBar")[0];
+        }
+        if (noaccess){
+            place2=document.getElementsByClassName("top-section")[0];
         }
         var newelem="";
         if(ppage){
@@ -1628,7 +1625,7 @@
 
         newelem=document.createElement('span');
         newelem.setAttribute("style", slistyle);
-        newelem.innerHTML="BRIGHTNESS : <input type='range' id='myRange' min=0 max=200 value=100 style='width: 200px;height:11px;cursor: pointer;float: right;'>";
+        newelem.innerHTML="BRIGHTNESS : <input type='range' id='myRange' min=50 max=250 value=100 style='width: 200px;height:11px;cursor: pointer;float: right;'>";
         document.getElementById("controls").appendChild(newelem);
         document.getElementById("myRange").addEventListener("input",badjust);
 
@@ -1639,7 +1636,7 @@
 
         newelem=document.createElement('span');
         newelem.setAttribute("style", slistyle);
-        newelem.innerHTML="CONTRAST : <input type='range' id='myRange1' min=0 max=200 value=100 style='width: 200px;height:11px;cursor: pointer;float: right;'>";
+        newelem.innerHTML="CONTRAST : <input type='range' id='myRange1' min=25 max=225 value=100 style='width: 200px;height:11px;cursor: pointer;float: right;'>";
         document.getElementById("controls").appendChild(newelem);
         document.getElementById("myRange1").addEventListener("input",cadjust);
 
@@ -1758,13 +1755,19 @@
         newelem=document.createElement('span');
         newelem.setAttribute("style", slistyle);
         newelem.style.margin="2px";
-        newelem.innerHTML="Tips smaller than : <input type='number' id='c7a' min='2' max='1000' value='100' style='width: 4em;height:11px;cursor: pointer; '> tokens.<input type='range' id='c7' min=0 max=1 value=0 style='width: 40px;height:11px;cursor: pointer;float: right;'>";
+        newelem.innerHTML="Lovense messages : <input type='range' id='c8' min=0 max=1 value=0 style='width: 40px;height:11px;cursor: pointer;float: right;'>";
         document.getElementById("chatcontrols").appendChild(newelem);
 
         newelem=document.createElement('span');
         newelem.setAttribute("style", slistyle);
         newelem.style.margin="2px";
-        newelem.innerHTML="Lovense messages : <input type='range' id='c8' min=0 max=1 value=0 style='width: 40px;height:11px;cursor: pointer;float: right;'>";
+        newelem.innerHTML="Tips smaller than : <input class='tinput' type='number' id='c7a' min='2' max='1000' value='100' style='width: 4em;height:11px;cursor: pointer; '> tokens.<input type='range' id='c7' min=0 max=1 value=0 style='width: 40px;height:11px;cursor: pointer;float: right;'>";
+        document.getElementById("chatcontrols").appendChild(newelem);
+
+        newelem=document.createElement('span');
+        newelem.setAttribute("style", slistyle);
+        newelem.style.margin="2px";
+        newelem.innerHTML="Translate chat to: <select id='language'></select><input type='range' id='c10' min=0 max=1 value=0 style='width: 40px;height:11px;cursor: pointer;float: right;'>";
         document.getElementById("chatcontrols").appendChild(newelem);
 
         newelem=document.createElement('span');
@@ -1772,6 +1775,15 @@
         newelem.style.margin="2px";
         newelem.innerHTML="Tokens recived : <span id='tclear' style='cursor:pointer'>  (Clear)</span><span id='c9' style='width: 40px;height:11px;float: right; color:black'>0</span>";
         document.getElementById("chatcontrols").appendChild(newelem);
+        tr2=tr2.replace("www.chaturbate","translate.googleapis")+"single?client=gtx&sl=auto&tl=";
+        var languages=["Afrikaans","Albanian","Arabic","Armenian","Azerbaijani","Balinese","Basque","Belarusian","Bengali","Bosnian","Bulgarian","Cantonese","Catalan","Chinese","Corsican","Croatian","Czech","Danish","Dutch","English","Estonian","Filipino","Finnish","French","Georgian","German","Greek","Hebrew","Hindi","Hungarian","Icelandic","Indonesian","Irish","Italian","Japanese","Javanese","Kazakh","Korean","Latvian","Limburgan","Lithuanian","Luxembourgish","Macedonian","Maltese","Mongolian","Myanmar","Norwegian","Papiamento","Persian","Polish","Portuguese","Punjabi","Romanian","Russian","Sanskrit","Serbian","Sicilian","Slovak","Slovenian","Somali","Spanish","Sundanese","Swahili","Swedish","Tamil","Thai","Turkish","Ukrainian","Urdu","Uzbek","Vietnamese","Yiddish"];
+        var langcode=["af","sq","ar","hy","az","ban","eu","be","bn","bs","bg","yue","ca","zh","co","hr","cs","da","nl","en","et","fil","fi","fr","ka","de","el","he","hi","hu","is","id","ga","it","ja","jv","kk","ko","lv","li","lt","lb","mk","mt","mn","my","no","pap","fa","pl","pt","pa","ro","ru","sa","sr","scn","sk","sl","so","es","su","sw","sv","ta","th","tr","uk","ur","uz","vi","yi"];
+        for(i=0;i < languages.length;i++) {
+            var option=document.createElement('option');
+            option.textContent=languages[i];
+            option.value=langcode[i];
+            document.getElementById("language").appendChild(option);
+        }
     }
 
     function followbut(){
@@ -2083,6 +2095,11 @@
         }
         if (room_status != "offline"){
             hls_source=data.hls_source;
+            cmaf=data.cmaf_edge;
+            if (cmaf){
+                hls_source=hls_source.replace(".m3u8","_sfm4s.m3u8");
+                hls_source=hls_source.replace("live-edge","live-fhls");
+            }
             videoSrc=hls_source;
             navigator.clipboard.writeText(hls_source);
             var vidqual=data.quality.quality;
@@ -2170,7 +2187,7 @@
             });
     }
 
-       function makealarm(){
+    function makealarm(){
         var newelem=document.createElement('span');
         newelem.innerHTML="Off <input type='range' id='alrm' min=0 max=1 value=0 style='width: 35px;height:auto;cursor: pointer'> On <span id='aonly'>|| Alarm only <input type='range' id='alrmtype' min=0 max=1 value=0 style='width: 35px;height:auto;cursor: pointer'> Go to page if public</span>";
         document.getElementById("alarm").appendChild(newelem);
@@ -2292,17 +2309,24 @@
         document.getElementById("c7").addEventListener("change",chatsetchange);
         document.getElementById("c7a").addEventListener("change",chatsetchange);
         document.getElementById("c8").addEventListener("change",chatsetchange);
+        document.getElementById("c10").addEventListener("change",chatsetchange);
         var chatobserver = new MutationObserver(chatadjust);
-        var chatobserverConfig = {childList: true, subtree: true };
+        var pmchatobserver = new MutationObserver(pmchatadjust);
+        var chatobserverConfig = {childList: true};
         var observenode=document.getElementsByClassName("message-list")[0];
+        var pmobservenode=document.getElementsByClassName("message-list")[1];
         if (localStorage.getItem(roomname+"Tokens")){
             document.getElementById("c9").innerHTML=localStorage.getItem(roomname+"Tokens");
             firstentry=false;
         }
         document.getElementById("tclear").addEventListener("click",cleartokens);
         chatobserver.observe(observenode,chatobserverConfig);
+        pmchatobserver.observe(pmobservenode,chatobserverConfig);
     }
-
+    function pmchatadjust(){
+        tabpm();
+        chatadjust();
+    }
     function cleartokens(){
         document.getElementById("c9").innerHTML=0;
         localStorage.removeItem(roomname+"Tokens");
@@ -2320,8 +2344,9 @@
         if (c7a<2){c7a=2;document.getElementById("c7a").value=2;}
         if (c7a>1000){c7a=1000;document.getElementById("c7a").value=1000;}
         c8=document.getElementById("c8").value;
+        c10=document.getElementById("c10").value;
         smallemoonoff();
-        chatadjust();
+        chatadjust();// after change
     }
 
     function chatadjust(){
@@ -2340,7 +2365,8 @@
         var messages=document.getElementsByClassName('msg-list-fvm')[tag].querySelectorAll('[data-testid="chat-message"]');
         var chatmessages=messages.length;
         if (chatmessages==0){return;}
-        for (i=0; i<chatmessages; i++){
+        var translated=0;
+        for (i = chatmessages-1; i > 0; i--) {
             var noticeelm=messages[i].querySelector('[data-testid="room-notice"]');
             if (noticeelm!=null){
                 var noticeclasses=noticeelm.classList;
@@ -2395,7 +2421,8 @@
             if (messages[i].querySelector('[data-testid="chat-message-text"]')!=null){
                 if (messages[i].querySelector('[data-testid="chat-message-username"]').className=="broadcaster"){
                     var chattext=messages[i].querySelector('[data-testid="chat-message-text"]').textContent;
-                    if ((chattext.indexOf("Lovense")!=-1)||(chattext.indexOf("------")!=-1)||(chattext.indexOf("******")!=-1)||(chattext.indexOf("The High Tipper")!=-1)||(chattext.indexOf("The king Tipper")!=-1)||(chattext.indexOf("Special Commands:")!=-1)||(chattext.indexOf("Blitz Mode")!=-1)){
+                    if ((chattext.indexOf("Lovense")!=-1)||(chattext.indexOf("------")!=-1)||(chattext.indexOf("******")!=-1)||(chattext.indexOf("The High Tipper")!=-1)||(chattext.indexOf("The king Tipper")!=-1)||(chattext.indexOf("Special Commands:")!=-1)||(chattext.indexOf("Blitz Mode")!=-1)||(chattext.indexOf("the critical hit rate")!=-1)){
+                        messages[i].name="notranslate";
                         if (c8==1){
                             messages[i].style.display="none";
                         }else{
@@ -2417,8 +2444,74 @@
                         messages[i].style.display="block";
                     }
                 }
+                if (c10==1){
+                    if(!messages[i].name){
+                        if (messages[i].style.display!="none"){
+                            var splitmode=true;
+                            var splitchatblock=false;
+                            if(document.getElementsByClassName('msg-list-fvm')[tag].classList.contains("message-list")){splitchatblock=true;}
+                            if(document.getElementById("ChatTabContainer").style.display=="none"){splitmode=false;}
+                            if ((splitmode&&splitchatblock)||(!splitmode&&!splitchatblock)){
+                                messages[i].name="translate";
+                                translated++;
+                                if (translated<8){
+                                    translate(messages[i]);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
+    }
+
+    function translate(elm){
+        var chattext=elm.querySelector('[data-testid="chat-message-text"]').textContent;
+        var result="";
+        chattext=chattext.replace(/(?:[\u2700-\u27bf]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff]|[\u0023-\u0039]\ufe0f?\u20e3|\u3299|\u3297|\u303d|\u3030|\u24c2|\ud83c[\udd70-\udd71]|\ud83c[\udd7e-\udd7f]|\ud83c\udd8e|\ud83c[\udd91-\udd9a]|\ud83c[\udde6-\uddff]|\ud83c[\ude01-\ude02]|\ud83c\ude1a|\ud83c\ude2f|\ud83c[\ude32-\ude3a]|\ud83c[\ude50-\ude51]|\u203c|\u2049|[\u25aa-\u25ab]|\u25b6|\u25c0|[\u25fb-\u25fe]|\u00a9|\u00ae|\u2122|\u2139|\ud83c\udc04|[\u2600-\u26FF]|\u2b05|\u2b06|\u2b07|\u2b1b|\u2b1c|\u2b50|\u2b55|\u231a|\u231b|\u2328|\u23cf|[\u23e9-\u23f3]|[\u23f8-\u23fa]|\ud83c\udccf|\u2934|\u2935|[\u2190-\u21ff])/g,"");
+        chattext=chattext.replace(/\./gi,"{.}");
+        chattext=chattext.replace(/\?/gi,"{?}");
+        chattext=chattext.replace(/\!/gi,"{!}");
+        chattext=chattext.replace(/\|/gi,"{|}");
+        chattext=chattext.replace(/\&/gi,"{{");
+        chattext=chattext.toLowerCase();
+        if (chattext.length>2){
+            chattext=encodeURI(chattext);
+            var lang=document.getElementById("language").options[document.getElementById("language").selectedIndex].value;
+            GM_xmlhttpRequest({
+                method: "GET",
+                timeout: 5000,
+                mozAnon: true,
+                anonymous: true,
+                url: tr2+lang+"&dt=t&q="+chattext,
+                onload: function(response) {
+                    if (response.status !== 200){
+                        result="Translate error "+response.status;
+                    }else{
+                        result=JSON.parse(response.responseText)[0][0][0];
+                        result=result.replace(/\\u200b/gi,"");
+                        result=result.replace(/\\u003d/gi,"=");
+                        result=result.replace(/\\u003c/gi,"<");
+                        result=result.replace(/\\u003e/gi,">");
+                        result=result.replace(/\{\{/gi,"&");
+                        result=result.replace(/\{/gi,"");
+                        result=result.replace(/\}/gi,"");
+                    }
+                    showtranslate(result,elm);
+                },
+                ontimeout: function(){
+                    result="Translate error timeout";
+                    showtranslate(result,elm);
+                }
+            });
+        }
+    }
+
+    function showtranslate(result,elm){
+        var newelem=document.createElement('span');
+        newelem.innerHTML=result;
+        newelem.className="translated";
+        elm.firstChild.lastElementChild.appendChild(newelem);
     }
 
     function smallemoonoff(){
@@ -2477,18 +2570,19 @@
     }
 
     function createimage(){
-        if (!ppage&&!noaccess){return;} // only on p and no access rooms
+        if (!ppage&&!noaccess){return;}
         hls.detachMedia();
         if (document.getElementById("profimg")){document.getElementById("profimg").remove();}
         if (document.getElementById("profjpgimg")){
             pimg.removeEventListener("load",regetimgprof);
             pimg.removeEventListener("error",errorimgprof);
             document.getElementById("profjpgimg").remove();
+            removevidplayer();
         }
         if (document.getElementById("vstatus")){document.getElementById("vstatus").innerHTML="";}
         if (videoSrc!=""){
             if ((room_status=="public")||(room_status.indexOf("watching")!=-1)){
-                if (errors<4){
+                if (!gojpg){
                     if (!document.getElementById("profplayer")){
                         makevidplayer();
                     }
@@ -2497,7 +2591,7 @@
                     document.getElementById("vstatus").innerHTML=" !!Video error please wait!!";
                     removevidplayer();
                     makejpgplayer();
-                    setTimeout(createimage, 10000);
+                    setTimeout(function(){gojpg=false;getnewhls(true,false,1);}, 10000);
                 }
                 return;
             }
@@ -2515,7 +2609,6 @@
                 response.blob().then(
                     function(rawimg){
                         var imgsize=rawimg.size;
-                        console.log(imgsize);
                         if (((imgsize<9500)||(imgsize>9510))&&((imgsize<4800)||(imgsize>4850))){
                             makeimg();
                         }else{
@@ -2532,6 +2625,7 @@
             document.getElementById("profplayer").remove();
             document.getElementById("controls").style.display="none";
             document.getElementById("vcontr").style.display="none";
+
         }
     }
 
@@ -2556,58 +2650,103 @@
         newelem.style.width="480px";
         document.querySelector('[data-testid="room-bio-tab-contents"]').appendChild(newelem);
     }
+
     function makejpgplayer(){
-        var newelem=document.createElement('img');
-        newelem.src="https://jpeg.live.mmcdn.com/minifwap/"+roomname+".jpg";
-        newelem.className="profplayer";
+        var newelem=document.createElement('canvas');
+        newelem.width="854";
+        newelem.height="480";
         newelem.id="profjpgimg";
-        newelem.style.width="854px";
-        newelem.style.height="480px";
+        newelem.style.display="none";
         document.querySelector('[data-testid="room-bio-tab-contents"]').appendChild(newelem);
         pimg.addEventListener("load",regetimgprof);
         pimg.addEventListener("error",errorimgprof);
-        pimg.src = "https://jpeg.live.mmcdn.com/stream?room="+roomname+"&f="+ new Date().getTime();
+        pimg.crossOrigin = "Anonymous";
+        n=new Date().getTime();
+        pimg.src = "https://jpeg.live.mmcdn.com/stream?room="+roomname+"&f="+n;
+        var canvas=document.querySelector('canvas');
+        stream = canvas.captureStream ? canvas.captureStream() : canvas.mozCaptureStream();
+        makevidplayer();
+        document.querySelector('video').srcObject=stream;
+        document.querySelector('video').play();
     }
 
     function errorimgprof(){
-        getnewhls(true,false,1);
+        if (gojpg){return;}
+        recstop();
+        setTimeout(function(){getnewhls(true,false,1);},2000);
     }
 
     function regetimgprof(){
-        if (document.visibilityState!="visible"){
+        var lt=new Date().getTime()-n;
+        if (lt>180){lt=180;}
+        if ((document.visibilityState!="visible")&&(!recording)){
             setTimeout(regetimgprof,2000);
         }else{
-            document.getElementById("profjpgimg").src=pimg.src;
-            setTimeout(function(){pimg.src = "https://jpeg.live.mmcdn.com/stream?room="+roomname+"&f="+ new Date().getTime();}, 50);
+            var canvas = document.querySelector('canvas');
+            canvas.getContext('2d').drawImage(pimg, 0, 0, pimg.width, pimg.height);
+            setTimeout(function(){n=new Date().getTime();pimg.src = "https://jpeg.live.mmcdn.com/stream?room="+roomname+"&f="+n;}, 200-lt);
         }
     }
 
     function makevidplayer(){
+         if(document.getElementById("tabs_content_container")){
+            document.getElementById("tabs_content_container").style.minHeight=parseInt(0.562*window.innerWidth-5)+"px";
+        }
+        var vidobserver=new MutationObserver(vidsize);
+        var vidobserverConfig ={attributes : true, attributeFilter : ['style'] };
         var control=localStorage.getItem("videoControls");
+        var newdivelem=document.createElement('div');
+        newdivelem.className="profdivplayer";
+        newdivelem.style.width=vidwidth+"px";
+        newdivelem.id="profplayer";
         var newelem=document.createElement('video');
-        newelem.className="profplayer";
-        newelem.id="profplayer";
         newelem.controls=true;
-        newelem.autoplay=true;
         if (control.indexOf("true")!=-1){newelem.muted=true;}
         var volume=control.split(":")[1].split(",")[0];
         newelem.volume=volume/100;
         newelem.poster="https://jpeg.live.mmcdn.com/stream?room="+roomname+"&f="+ new Date().getTime();
-        newelem.style.width="854px";
-        newelem.style.height="480px";
-        document.querySelector('[data-testid="room-bio-tab-contents"]').appendChild(newelem);
-        document.addEventListener("visibilitychange",vidpause);
+        newelem.height=parseInt(vidwidth*0.562)+1;
+        newelem.id="profvid";
+        newdivelem.appendChild(newelem);
+        document.querySelector('[data-testid="room-bio-tab-contents"]').appendChild(newdivelem);
+        vidobserver.observe(document.getElementById("profplayer"), vidobserverConfig);
+        if(!document.querySelector('canvas')){
+            document.addEventListener("visibilitychange",vidpause);
+        }
+        document.getElementById("vcontr").style.display="block";
+    }
+
+    function vidsize(){
+        vidwidth=parseInt(document.getElementById("profplayer").style.width);
+        if (vidwidth<80){vidwidth=80;document.getElementById("profplayer").style.width=vidwidth+"px";}
+        if (vidwidth>window.innerWidth-75){vidwidth=window.innerWidth-75;document.getElementById("profplayer").style.width=vidwidth+"px";}
+        document.getElementById("profvid").height=parseInt(vidwidth*0.562)+1;
     }
 
     function startvid(){
+        var restarting=false;
+        if(document.visibilityState!="visible"){return;}
         document.getElementById("vcontr").style.display="block";
+        var video=document.getElementsByTagName('video')[0];
+        video.poster="https://jpeg.live.mmcdn.com/stream?room="+roomname+"&f="+ new Date().getTime();
         hls.loadSource(videoSrc);
-        hls.attachMedia(document.getElementById("profplayer"));
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MEDIA_ATTACHED, function(){video.play();});
         hls.on(Hls.Events.ERROR, function (event, data) {
-            if (data.fatal==true){
-                if (errors==0){setTimeout(function(){errors=0;}, 5000);}
-                errors++;
-                getnewhls(true,false,1);
+            if (restarting){return;}
+            if (fatalerror==0){setTimeout(function(){fatalerror=0;}, 15000);}
+            fatalerror++;
+            if (fatalerror < 6){
+                if ((data.fatal==true)||(data.type="networkError")){
+                    hls.detachMedia();
+                    restarting=true;
+                    setTimeout(function(){getnewhls(true,false,1);},2000);
+                  }
+            }else{
+                gojpg=true;
+                hls.detachMedia();
+                restarting=true;
+                createimage();
             }
         });
     }
@@ -2615,6 +2754,7 @@
     function vidpause(){
         if (recording){return;}
         if (document.hidden){
+            hls. stopLoad();
             hls.detachMedia();
         }else{
             if (!document.hidden){
@@ -2633,7 +2773,7 @@
                 mediaRecorder.pause();
                 recpause=true;
                 document.getElementById("recbut").style.color="#990000";
-                setTimeout(function(){document.getElementById("recbut").style.color="#990000";},800);
+                setTimeout(function(){document.getElementById("recbut").style.color="#990000";},400);
                 return;
             }
             mediaRecorder.resume();
@@ -2645,12 +2785,14 @@
         document.getElementById("vcontr").style.cursor="not-allowed";
         document.getElementById("vcontr2").style.cursor="not-allowed";
         document.getElementById("recbut").style.color="#990000";
-        var video=document.getElementsByTagName('video')[0];
-        var stream = video.captureStream ? video.captureStream() : video.mozCaptureStream();
-        if (!video.captureStream) {
-            var ctx = new AudioContext();
-            var dest = ctx.createMediaStreamSource(stream);
-            dest.connect(ctx.destination);
+        if (!document.querySelector('canvas')){
+            var video=document.querySelector('video');
+            stream = video.captureStream ? video.captureStream() : video.mozCaptureStream();
+            if (!video.captureStream) {
+                var ctx = new AudioContext();
+                var dest = ctx.createMediaStreamSource(stream);
+                dest.connect(ctx.destination);
+            }
         }
         mediaRecorder = new MediaRecorder(stream);
         mediaRecorder.onstop = startDownload;
@@ -2675,9 +2817,9 @@
         recording=false;
         document.getElementById("vcontr").style.cursor="pointer";
         document.getElementById("vcontr2").style.cursor="pointer";
-        if(document.getElementById("profplayer")){
-            document.removeEventListener("visibilitychange",vidpause);
-            document.getElementById("profplayer").remove();
+        if (!document.querySelector('canvas')){
+            removevidplayer();
+            document.getElementById("controls").style.display="block";
             createimage();
         }
         var blob = new Blob(recordedBlobs, {type: 'video/webm codecs="vp9" opus'});
@@ -2987,19 +3129,8 @@
     }
 
     function forceopen(room){
-        if (document.hasFocus()){
-            document.location.href=domain+room;
-            return;
-        }
-        var mywindow=window.open(domain+room,"");
-        setTimeout(function(){
-            if(mywindow!=null){
-                mywindow.focus();
-                window.open(domain, '_self');
-                return;
-            }
-            document.location.href=domain+room;
-        },250);
+        window.focus();
+        document.location.href=domain+room;
     }
 
     function opendm3(that){
@@ -3022,7 +3153,7 @@
     }
 
     function setprofile(){
-        document.getElementsByClassName("BaseRoomContents")[0].style.minHeight="505px";
+        document.getElementsByClassName("BaseRoomContents")[0].style.minHeight=parseInt(0.562*window.innerWidth-5)+"px";
         var newelem=document.createElement('div');
         newelem.style.width="100%";
         newelem.style.height="1px";
@@ -3033,6 +3164,7 @@
         document.getElementsByClassName("BaseRoomContents")[0].appendChild(newelem);
         newelem=document.createElement('div');
         newelem.className="BioContents";
+        newelem.style.margin="20px";
         var newtable=document.createElement('table');
         newelem.appendChild(newtable);
         var newtr=document.createElement('tr');
@@ -3041,6 +3173,7 @@
         newtable.appendChild(newtr);
         document.getElementsByClassName("BaseRoomContents")[0].appendChild(newelem);
         putinlinks();
+        makevidcontrol();
         getnewhls(true,false,1);
         setTimeout(function(){
             if (room_status!="public"){
@@ -3342,16 +3475,18 @@
                 return;
             }
             response.json().then(function(data){
-                if(data.url !=""){
-                    document.getElementById("rstatus").innerHTML=data.room_status;
-                    if (clicked){navigator.clipboard.writeText(data.url);}
-                }else{
-                    document.getElementById("rstatus").innerHTML=data.room_status;
-                }
+                document.getElementById("rstatus").innerHTML=data.room_status;
                 document.getElementById("hls").innerHTML=oldmsg;
                 roomstatus=data.room_status;
                 room_status=data.room_status;
-                videoSrc=data.url;
+                videoSrc=data.url;//for player
+                if (videoSrc!=""){
+                    if (cmaf){
+                        videoSrc=videoSrc.replace(".m3u8","_sfm4s.m3u8");
+                        videoSrc=videoSrc.replace("live-edge","live-fhls");
+                    }
+                    if (clicked){navigator.clipboard.writeText(videoSrc);}
+                }
                 hlsfetching=false;
                 if (next==1){createimage();}
                 if (next==2){testalarm2();}

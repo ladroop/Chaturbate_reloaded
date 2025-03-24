@@ -1,5 +1,13 @@
-Chaturbate reloaded userscript manual. V1.4.9
+Key functions
 
+>See the cam and the bio without entering the room.
+>Write notes and show previews in the thumbnails.
+>Record the cam , also when not in the chat.
+>Translate the chat in real time to your desired language.
+>Show a lot of extra info in the bio.
+-------------------------------------------------
+
+Chaturbate reloaded userscript manual. V1.5.1
 
 *Settings menu (next to your user name where you can also set the dark mode).
 
@@ -22,7 +30,7 @@ Big Thumbnails : Makes the thumbnails bigger , default is "Off".
 Hide male/trans : All male and trans thumbnails will be hidden , the tab's male and trans will be
 removed , default is "Off".
 -you need to refresh to page to make it effective.
--Not on the page "tags".
+-Not on the page "tags" and page followed cams.
 -At the bottom of a thumb page you will see how many rooms are hidden.
 
 Save all settings : All above script settings will be saved and also the settings for "Clean profile",
@@ -52,7 +60,7 @@ If you click the name under the picture you go to a page that only shows the bio
 
 An extra sub-selector next to the gender tabs.
 
-*Room with video.
+*Room with video. (with or without chat)
 
 There will be a button "VIDEO CONTROLS ON/OFF",
 if clicked a pop-up will be visible where you can control the brightness, contrast, saturation,
@@ -80,14 +88,22 @@ If clicked a pop-up will be visible where you can set:
 -hide all mod/fan enter leave messages (only on the English version of the site).
 -hide all Grey user chat.
 -hide all moderator chat.
--hide all tips smaller then a set amount.
 -hide all Lovence messages (based on the most common words in those messages).
+-hide all tips smaller then a set amount.
+-enable translator with lanuage selector. (see below).
 -you can see the tokens the model received while you where in the room.
 The script will remember it so you can leave or refresh the page and it will continue when you are
 back. Click clear to set it back to zero.
 
-If you receive a PM and you are in an other tab the tab will blink until you open the tab again.
--The PM tab in the chat must be closed !
+The translator will translate all incoming messages to your selected language.
+If you enable it the last few messages will be translated and then every incoming message.
+When you switch between split mode and theatre mode translation takes place when a message arrives.
+It only translates real user messages.
+It does not translate lovence messages.
+It does translate PM messages.
+!!!!! this function is experimental and can stop beyond my control. (in fact everything in this script is ... )
+
+If you receive a PM and you are in an other browser tab the browser tab will blink until you open the tab again.
 
 The script skips the "accept room rules" pop up.
 
@@ -109,9 +125,9 @@ without cam and chat (it really switches and will not affect the browsers back f
 On a bio only page you have a video player (if on-line) or the last broadcast picture (if available)
 or the card image (if available).
 -The player got an error handler and will try to get a new video link if the old one fails.
--If it takes too long press "RELOAD INFO".
--If there are too many fatal errors in a short period it will give up and try again in 15 seconds.
+-If the video stream fails too often it will fall back to a mjpg player for 10 seconds before it tries again.
 -The player also plays protected streams (if you have access).
+-You can resize the video player if you pull the bottom left corner.
 -There is a button to open the video controls (see "room with video").
 -The player will stop if the browser tab is not on top and resume when it's on top again.
 -it will not stop if a recording is active.
@@ -154,11 +170,8 @@ The following info will be added:
 If alarm is turned on a alarm symbol will appear in the browsers tab and the script will check the room
 status every minute. You can select alarm only, if the status changes an alarm will sound and the browser tab will
 show "ALARM" , or go to page if public.(only if not on a page with chat) If the status changes to public, this can be from offline,
-private etc., If the browser tab is on top it will open in that tab , if not it will open a new tab and the chaturbate 
-home page will be loaded in the old tab. (this sound complicated but a browser tab can not close itself of or bring itself 
-on top and the cam page will not load if it's not on top)
+private etc., the room will be opened and the browser tab will come to the foreground.
 If you start the "open room when public" alarm while the room is public it must go to an other status first.
-In rare occasions you pop-up blocker may prevent to room to be opened. Check you pop-up blocker settings.
 Turn it off to stop the alarm or click "reload info".
 Remember that when you are in a normal offline room the broadcaster sees you in the chatlist. 
 The broadcaster will not see you when you're on the special profile page.
@@ -188,16 +201,16 @@ You will be redirected to a only profile page.
 You can write notes, open DM window, follow/unfollow and it shows the video status.
 This status can be "offline" or "password_protected", if password_protected the room is online.
 You can set "check" on or off. If on it will check every minute if you can access the room.
-If you can access the room will be opened (See alarm function for it's behavior)
+If you can access the room will be opened.
 A password room can also have banned your region or gender or you.
 In that case you will never have access (nothing will happen if the password is removed)
 and follow and DM will not work !
 
 *A room that banned your region or gender.
 
-You will have a mjpeg player (no sound) if on-line or the last available picture.
+You will have a mjpeg to video player (no sound, low frame rate) if on-line or the last available picture.
 You can write notes.
-You see and update the video status.(this also updates the player)
+You can update the video status.(this also updates the player)
 Broadcasters region. (Only if broadcaster appears on network sites and if index was made when online).
 Broadcasters nationality. (Only if set)
 Some links to useful websites.

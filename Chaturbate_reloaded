@@ -59,7 +59,7 @@
 // @description:sk   Vylepšuje Chaturbate pridaním viacerých nových funkcií.
 // @description:sl   Poskytuje vám nový a vylepšený zážitok z chatrba.
 // @description:sv   Ger dig en ny och förbättrad chaturbate upplevelse.
-// @version        1.5.3
+// @version        1.5.4
 // @namespace      chaturbate_goes_Ladroop
 // @match          https://*chaturbate.com/*
 // @match          https://*.chaturbate.com/*
@@ -188,6 +188,7 @@
     var rcount=0;
     var regoffset=0;
     var regioarray=[];
+    var regiofetch=true;
     var noaccess=false;
     var c1=0;
     var c2=0;
@@ -2115,10 +2116,10 @@
             }
         }
         if (data.num_viewers!=0){
-            wprof("Users in room:",data.num_viewers+"<a href=# id='userview'> (Click to view)</a>");
+            wprof("Users in room:",data.num_viewers+"<a href=# id='userview' style='display:none'> (Show userlist.)</a>");
             document.getElementById("userview").addEventListener("click",getuserlist);
         }else{
-            wprof("Users in room:","0");
+            wprof("Users in room:","0<a href=# id='userview' style='display:none'></a>");
         }
         if (data.low_satisfaction_score){
             wprof("Satisfaction score:","<font color=#CC0000>LOW !!!</font>");
@@ -2160,11 +2161,9 @@
         if (data.tips_in_past_24_hours !== 0){
             wprof("You tipped:",data.tips_in_past_24_hours+" Tk/24h");
         }
-        if (!data.opt_out){
-            wprof("Nationality:","<span id='flaginfo'>wait....</span>");
-            wprof("Region:","<span id='regioninfo'>wait....</span>");
-            getregion(false);
-        }
+        wprof("Nationality:","<span id='flaginfo'>wait....</span>");
+        wprof("Region:","<span id='regioninfo'>wait....</span>");
+        getregion(false);
         if (biodata.performer_has_fanclub){
             wprof("Fanclub costs:",biodata.fan_club_cost*3+" Tk / 3 Months");
         }
@@ -2211,6 +2210,7 @@
     }
 
     function getuserlist(){
+        if (regiofetch){alert("Please wait");return;}
         if(document.getElementById("rulespop").style.display=="block"){
             document.getElementById("rulespop").style.display="none";
             document.getElementById("rulespop").innerHTML="";
@@ -2305,7 +2305,12 @@
         setTimeout(alarmtab,500);
     }
 
-    function formatuserlist(userdata){
+   function formatuserlist(userdata){
+        var broadcastarray=[];
+        for(i=0;i < region.length;i++) {
+            broadcastarray[i]=JSON.parse(localStorage.getItem("region_"+region[i]));
+        }
+        var bc="";
         var userarray=userdata.split(",");
         var height=15*userarray.length+120;
         var scroll="";
@@ -2326,20 +2331,63 @@
             if (user[2]=="f"){user[2]="https://web.static.mmcdn.com/tsdefaultassets/gendericons/female.svg";}
             if (user[2]=="c"){user[2]="https://web.static.mmcdn.com/tsdefaultassets/gendericons/couple.svg";}
             if (user[2]=="s"){user[2]="https://web.static.mmcdn.com/tsdefaultassets/gendericons/trans.svg";}
-            if (user[3]=="t"){user[3]="(Follower)";}
+            if (user[3]=="t"){user[3]="<span title='follower'>⭐</span>";}
             if (user[3]=="f"){user[3]="";}
+            bc="";
+            for(n=0;n < region.length;n++) {
+                if (broadcastarray[n].indexOf(user[0])!=-1){
+                    bc="<span title='broadcaster' name='broadcast' broadcaster='"+user[0]+"'>🖥️</span>";
+                    console.log(broadcastarray[n][broadcastarray[n].indexOf(user[0])]);
+                    break;
+                }
+            }
+            if (user[0]==roomname){
+                bc="<span title='broadcaster' name='broadcast' broadcaster='"+user[0]+"'>🖥️</span>";
+            }
             if ((user[0]==roomname)||(user[0]==yourname)){
-                userstring=userstring+"<img style='height:16px' src='"+user[2]+"'><a style='font-weight: bold;color:"+user[1]+"'>"+user[0]+"</a> "+user[3]+"<br>";
+                userstring=userstring+"<img style='height:16px' src='"+user[2]+"'>"+bc+"<a style='font-weight: bold;color:"+user[1]+"'>"+user[0]+"</a> "+user[3]+"<br>";
             }else{
                 if (loggedin){
-                    userstring=userstring+"<img style='height:16px' src='"+user[2]+"'><a target=_blank style='font-weight: bold;color:"+user[1]+"' href='"+domain+"p/"+yourname+"?tab=bio&model="+user[0]+"'>"+user[0]+"</a> "+user[3]+"<br>";
+                    userstring=userstring+"<img style='height:16px' src='"+user[2]+"'>"+bc+"<a target=_blank style='font-weight: bold;color:"+user[1]+"' href='"+domain+"p/"+yourname+"?tab=bio&model="+user[0]+"'>"+user[0]+"</a> "+user[3]+"<br>";
                 }else{
-                    userstring=userstring+"<img style='height:16px' src='"+user[2]+"'><a target=_blank style='font-weight: bold;color:"+user[1]+"' href='"+domain+user[0]+"'>"+user[0]+"</a> "+user[3]+"<br>";
+                    userstring=userstring+"<img style='height:16px' src='"+user[2]+"'>"+bc+"<a target=_blank style='font-weight: bold;color:"+user[1]+"' href='"+domain+user[0]+"'>"+user[0]+"</a> "+user[3]+"<br>";
                 }
             }
         }
         userstring=userstring+"+"+userarray[0].split("|")[0]+" Anonymous users.</div>";
         document.getElementById("rulespop").innerHTML=userstring;
+        broadcastarray="";
+        broadcastcheck(document.getElementsByName("broadcast").length-1);
+    }
+
+    function broadcastcheck(n){
+        if (n<0){return;}
+        var name=document.getElementsByName("broadcast")[n].getAttribute("broadcaster");
+        var url=domain+"get_edge_hls_url_ajax/";
+        var csrftoken= readCookie("csrftoken");
+        var data = new FormData();
+        data.append( "room_slug", name );
+        data.append( "csrfmiddlewaretoken", csrftoken );
+        fetch(url,{
+            credentials: "omit",
+            method: "POST",
+            headers: {
+                'x-csrftoken': csrftoken,
+                'x-requested-with': 'XMLHttpRequest'
+            },
+            referrer: domain+name+"/",
+            body: data
+        }).then(function(response){
+            response.json().then(function(data){
+                if(data.room_status=="offline"){
+                    document.getElementsByName("broadcast")[n].innerHTML="🖥️❌";
+                    document.getElementsByName("broadcast")[n].title="broadcaster offline";
+                }
+                n--;
+                broadcastcheck(n);
+                return;
+            });
+        });
     }
 
     function chatchange(){
@@ -2747,7 +2795,7 @@
         newelem.height=parseInt(vidwidth*0.562)+1;
         newelem.id="profvid";
         newelem.setAttribute("playsinline", "");
-        newelem.setAttribute("autoplay", "")
+        newelem.setAttribute("autoplay", "");
         newdivelem.appendChild(newelem);
         document.querySelector('[data-testid="room-bio-tab-contents"]').appendChild(newdivelem);
         vidobserver.observe(document.getElementById("profplayer"), vidobserverConfig);
@@ -2947,6 +2995,9 @@
 
     function newinfo(){
         if (fetching!==0){alert("Slow down !");return;}
+        if (regiofetch){alert("Please wait !");return;}
+        regiofetch=true;
+        localStorage.setItem("regloaded","bar");
         if(document.getElementById("rulespop")){document.getElementById("rulespop").style.display="none";}
         var tags=document.getElementsByName("info");
         for(i=tags.length-1;i>=0;i--){
@@ -3529,6 +3580,10 @@
     }
 
     function getregion(again){
+        if (localStorage.getItem("regloaded")=="bar"){
+            loadregion();
+            return;
+        }
         if (localStorage.getItem("regloaded")){
             for(i=0;i < region.length;i++) {
                 regioarray=JSON.parse(localStorage.getItem("region_"+region[i]));
@@ -3539,12 +3594,16 @@
                     }else{
                         document.getElementById("flaginfo").parentNode.parentNode.style.display="none";
                     }
-                    return;
+                     regiofetch=false;
+                     document.getElementById("userview").style.display="initial";
+                     return;
                 }
-            }
+            }// have array but not in
             if ((room_status=="offline")||(room_status=="away")){
                 document.getElementById("regioninfo").parentNode.parentNode.style.display="none";
                 document.getElementById("flaginfo").parentNode.parentNode.style.display="none";
+                regiofetch=false;
+                document.getElementById("userview").style.display="initial";
                 return;
             }
             if(!again){
@@ -3557,6 +3616,8 @@
                 return;
             }
         }
+        regiofetch=false;
+        document.getElementById("userview").style.display="initial";
         document.getElementById("regioninfo").parentNode.parentNode.style.display="none";
         document.getElementById("flaginfo").parentNode.parentNode.style.display="none";
     }

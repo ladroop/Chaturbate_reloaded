@@ -1,5 +1,3 @@
-
-
 Key functions
 
 See the cam and the bio without entering the room.
@@ -7,10 +5,10 @@ Write notes and show previews in the thumbnails.
 Record the cam , also when not in the chat.
 Translate the chat in real time to your desired language.
 Show a lot of extra info in the bio.
-Ban users that send unwanted DM.
+Ban/ignore rooms or users.
 
 
-Chaturbate reloaded userscript manual. V1.5.5
+Chaturbate reloaded userscript manual. V1.5.6
 
 *Settings menu (next to your user name where you can also set the dark mode).
 
@@ -44,14 +42,16 @@ Dark mode", "Video width", "Theater mode", "Volume" and "Search filters open".
 Clear all saved settings: all saved settings will be cleared, on the next log in they will have the
 default value.
 
-Manage bans: Unban users you previously banned (also see "ban users who send unwanted DM").
+Ban/ignore this room: You will unfollow the room, erase notes you made and you will ban the room (from seeing your profile,
+sending you DM and following you).
+The script will hide this room for you and you can never enter it again. It will also remove it from your thumbnails.
+Ban's expire in 6 months.
 
-*Ban users who send unwanted DM.
-If a user sends a DM the users name will be listed in the DM list (The message bubble next to your username).
-Next to the username you will see a kick symbol. If you click it you can ban that user and he will never be 
-able to send you a DM again
+Manage bans: Unban users you previously banned.
 
 *Thumbnail page ( standard , discover and "more rooms like this").
+
+recommended will be removed from your following page and in the following drop down menu.
 
 In the thumbnail you see a note symbol , this symbol will be red if you wrote notes for that model.
 If you click it a window will appear where you can write/edit the note.
@@ -84,7 +84,7 @@ and press it again to resume recording.
 Press "STOP RECORD" to stop the recording and save it to disk.
 -The video adjustments are not visible in the recording.
 -You can not close the video control popup while recording.
--The quality of the recordings are reasonable but not extreme good, for good recordings use 
+-The quality of the recordings are reasonable but not extreme good, for good recordings use
 an external recorder (the script got many options to copy the video URL).
 
 Snapshots (in the context menu when you right click the video) will be saved as snapshot.jpg
@@ -108,7 +108,7 @@ back. Click clear to set it back to zero.
 
 The translator will translate all incoming messages to your selected language.
 If you enable it the last few messages will be translated and then every incoming message.
-When you switch between split mode and theatre mode translation takes place when a message arrives.
+When you switch between split mode and theater mode translation takes place when a message arrives.
 It only translates real user messages.
 It does not translate lovence messages.
 It does translate PM messages.
@@ -144,16 +144,16 @@ or the card image (if available).
 -it will not stop if a recording is active.
 -It will use the volume and mute setting of the normal player.
 
-The bio will have a lot of extra information (see below), the button "RELOAD INFO" will reload 
+The bio will have a lot of extra information (see below), the button "RELOAD INFO" will reload
 this information and it will copy the video URL to the clipboard.
 
 The following info will be added:
 
 -Note field where you can write notes.(Typing "$" will show as the current date).
--Link to a DM pop up.
+-Link to a DM pop up that contains the room name.
 -Private show costs (only if private enabled).
 -Minimum private time. *
--Spy on private costs or disabled. 
+-Spy on private costs or disabled.
 -Fanclub member spy on private costs. (only if different from normal user spy on private costs).*
 -Premium private show costs. (if premium is enabled) *
 -Minimum premium private time. *
@@ -173,7 +173,7 @@ The following info will be added:
 -Moderator (only if you're a moderator).
 -Low satisfaction score (only if low).
 -Number of users in the room (see below).
--Last day online (only if offline). (this is in central American date !)   
+-Last day online (only if offline). (this is in central American date !)
 -Chat rules (click to read)(only if there are chat rules).
 -Appear on network sites (only if no).
 -A few links to some useful websites. (some are not there if appear on network sites is set to no)
@@ -184,7 +184,7 @@ show "ALARM" , or go to page if public.(only if not on a page with chat) If the 
 private etc., the room will be opened and the browser tab will come to the foreground.
 If you start the "open room when public" alarm while the room is public it must go to an other status first.
 Turn it off to stop the alarm or click "reload info".
-Remember that when you are in a normal offline room the broadcaster sees you in the chatlist. 
+Remember that when you are in a normal offline room the broadcaster sees you in the chatlist.
 The broadcaster will not see you when you're on the special profile page.
 
 If there are users in the room there is next to the number a link that will show the user list.
@@ -239,4 +239,3 @@ Broadcasters nationality. (Only if set)
 Some links to useful websites.
 A link that will search for more info, it will try to find the thumbnail info and shows it on the page. This
 only works if the room is public.
-

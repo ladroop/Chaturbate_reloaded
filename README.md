@@ -1,3 +1,5 @@
+
+
 Key functions
 
 See the cam and the bio without entering the room.
@@ -7,8 +9,7 @@ Translate the chat in real time to your desired language.
 Show a lot of extra info in the bio.
 Ban/ignore rooms or users.
 
-
-Chaturbate reloaded userscript manual. V1.5.6
+Chaturbate reloaded userscript manual. V1.5.8
 
 *Settings menu (next to your user name where you can also set the dark mode).
 
@@ -42,12 +43,13 @@ Dark mode", "Video width", "Theater mode", "Volume" and "Search filters open".
 Clear all saved settings: all saved settings will be cleared, on the next log in they will have the
 default value.
 
-Ban/ignore this room: You will unfollow the room, erase notes you made and you will ban the room (from seeing your profile,
+Ban/ignore this room: You will unfollow the room, erase DM, erase notes and you will ban the room (from seeing your profile,
 sending you DM and following you).
 The script will hide this room for you and you can never enter it again. It will also remove it from your thumbnails.
-Ban's expire in 6 months.
+Ban's expire in 1 month but this can be made permanent
 
-Manage bans: Unban users you previously banned.
+Manage bans: Unban users you previously banned and make bans permanent. Behind the name it shows how many days are left for the ban
+or a lock if it's permanent
 
 *Thumbnail page ( standard , discover and "more rooms like this").
 

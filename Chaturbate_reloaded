@@ -59,7 +59,7 @@
 // @description:sk   Vylepšuje Chaturbate pridaním viacerých nových funkcií.
 // @description:sl   Poskytuje vám nový a vylepšený zážitok z chatrba.
 // @description:sv   Ger dig en ny och förbättrad chaturbate upplevelse.
-// @version        1.5.6
+// @version        1.5.8
 // @namespace      chaturbate_goes_Ladroop
 // @match          https://*chaturbate.com/*
 // @match          https://*.chaturbate.com/*
@@ -174,6 +174,7 @@
     var regoffset=0;
     var regioarray=[];
     var regiofetch=true;
+    var banusers=[];
     var noaccess=false;
     var c1=0;
     var c2=0;
@@ -437,7 +438,7 @@
         newelemtxt4.innerHTML="Manage ban's.";
         newelemtxt4.style.cursor="pointer";
         newelemtxt4.addEventListener("click", bantoggle );
-        newelemtxt5.innerHTML="<select id='banusers' style='width:150px'></select><input id='unbanbut' type='button' value='Unban' style='float:right;margin:0px 10px 0px 0px'>";
+        newelemtxt5.innerHTML="<select id='banusers' style='width:220px'></select><br><input id='unbanbut' type='button' value='Unban' style='margin:8px 0px 0px 0px'><input id='permbut' type='button' value='Make permanent' style='margin:8px 15px 0px 8px'>";
         newelemtxt5.id="banlist";
         newelemtxt5.style.display="none";
         newelemtxt6.innerHTML="Ban/ignore this room.";
@@ -974,7 +975,6 @@
         currpage=document.location.href;
         var genclass="";
         var tags=document.querySelectorAll('[data-testid="room-card-image"]');
-        var banusers="";
         if (localStorage.getItem("ignoredusers")){
             banusers=localStorage.getItem("ignoredusers").split(",");
         }
@@ -3725,16 +3725,18 @@
     function bantoggle(){
         if (document.getElementById("banlist").style.display=="none"){
             document.getElementById("banlist").style.display="block";
-            getbanlist();
+            banusers=[];
+            getbanlist(1);
         }else{
             document.getElementById("banusers").innerHTML="";
             document.getElementById("unbanbut").removeEventListener("click", unbanit );
+            document.getElementById("permbut").removeEventListener("click", permban );
             document.getElementById("banlist").style.display="none";
         }
     }
-    function getbanlist(){
-        var url=domain+"api/ts/chat/ban-list/";
-        var bannames=[];
+    function getbanlist(page){
+        var url=domain+"api/ts/chat/ban-list/?page="+page;
+        var nowdate=new Date();
         fetch(url,{ credentials: "same-origin"}).then(
             function(response) {
                 if (response.status !== 200) {
@@ -3748,15 +3750,28 @@
                     selectnode.appendChild(option);
                     var banlist=data.ban_dict.bans;
                     for (n=0; n<banlist.length; n++){
+                        var expdate=new Date(banlist[n].expires_at);
+                        var expwhen=expdate-nowdate;
+                        var expdays=Math.ceil(expwhen/86400000);
                         option=document.createElement('option');
                         option.textContent=banlist[n].username;
+                        if (expdays>100){
+                            option.textContent=option.textContent+" 🔒";
+                        }else{
+                            option.textContent=option.textContent+" ("+expdays+" days)";
+                        }
                         option.value=banlist[n].id;
                         selectnode.appendChild(option);
-                        bannames.push(banlist[n].username);
+                        banusers.push(banlist[n].username);
                     }
-                    localStorage.setItem("ignoredusers",bannames.toString());
+                    if (data.ban_dict.current_page!=data.ban_dict.page_count){
+                        page++;
+                        getbanlist(page);
+                        return;
+                    }
+                    localStorage.setItem("ignoredusers",banusers.toString());
                     document.getElementById("unbanbut").addEventListener("click", unbanit );
-
+                    document.getElementById("permbut").addEventListener("click", permban );
                 });
             });
     }
@@ -3784,10 +3799,39 @@
                 return;
             }
             document.getElementById("banusers").innerHTML="";
-            getbanlist();
+            banusers=[];
+            getbanlist(1);
        });
     }
-
+    function permban(){
+        var banid=document.getElementById("banusers").options[document.getElementById("banusers").selectedIndex].value;
+        if (banid==0){return;}
+        if (document.getElementById("banusers").options[document.getElementById("banusers").selectedIndex].textContent.split(" ").length<3){return;}
+        var url=domain+"edit_room_ban/";
+        var csrftoken= readCookie("csrftoken");
+        var data = new FormData();
+        data.append( "banid", banid);
+        data.append( "action", "ban_perm");
+        data.append( "room_username", yourname);
+        data.append( "csrfmiddlewaretoken", csrftoken );
+        fetch(url,{
+            credentials: "same-origin",
+            method: "POST",
+            headers: {
+                'x-requested-with': 'XMLHttpRequest'
+            },
+            referrer: domain+yourname+"/",
+            body: data
+        }).then(function(response){
+            if (response.status !== 200) {
+                alert("Error "+response.status);
+                return;
+            }
+            document.getElementById("banusers").innerHTML="";
+            banusers=[];
+            getbanlist(1);
+       });
+    }
     function unfollowthispage(){
         var thumbholder=document.getElementsByClassName("endless_page_template")[0];
         roomthumbs=thumbholder.getElementsByClassName("roomCard");
@@ -3886,12 +3930,11 @@
             checkignore();
             return;
         }
-        getignoreusers();
+        getignoreusers(1);
     }
 
-    function getignoreusers(){
-        var banusers=[];
-        var url=domain+"api/ts/chat/ban-list/";
+    function getignoreusers(page){
+        var url=domain+"api/ts/chat/ban-list/?page="+page;
         fetch(url,{ credentials: "same-origin"}).then(
             function(response) {
                 if (response.status !== 200) {
@@ -3902,6 +3945,11 @@
                     for (n=0; n<banlist.length; n++){
                         banusers.push(banlist[n].username);
                     }
+                    if (data.ban_dict.current_page!=data.ban_dict.page_count){
+                        page++;
+                        getignoreusers(page);
+                        return;
+                    }
                     localStorage.setItem("ignoredusers",banusers.toString());
                     checkignore();
                 });
@@ -3910,7 +3958,7 @@
 
     function checkignore(){
         if (roomname==""){return;}
-        var banusers=localStorage.getItem("ignoredusers").split(",");
+        banusers=localStorage.getItem("ignoredusers").split(",");
         if (banusers.indexOf(roomname)!=-1){
             document.location.href=domain;
         }
@@ -3942,6 +3990,24 @@
         unfollowpage(bname);
     }
     function makeban2(bname){
+        var url=domain+"api/messaging/delete-conversation/";
+        var csrftoken= readCookie("csrftoken");
+        var data = new FormData();
+        data.append( "csrfmiddlewaretoken", csrftoken );
+        data.append( "to_username", bname );
+        fetch(url,{
+            credentials: "same-origin",
+            method: "POST",
+            headers: {
+                'x-requested-with': 'XMLHttpRequest'
+            },
+            referrer: domain+"messages/",
+            body: data
+        }).then(function(){
+            makeban3(bname);
+        });
+    }
+    function makeban3(bname){
         var url=domain+"roomban/"+bname+"/"+yourname+"/";
         var csrftoken= readCookie("csrftoken");
         var data = new FormData();
@@ -3960,7 +4026,7 @@
                 return;
             }
             response.json().then(function(data){
-                var banusers=localStorage.getItem("ignoredusers").split(",");
+                banusers=localStorage.getItem("ignoredusers").split(",");
                 banusers.push(bname);
                 localStorage.setItem("ignoredusers",banusers.toString());
                 setTimeout(function(){document.location.href=domain;},200);

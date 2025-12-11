@@ -59,7 +59,7 @@
 // @description:sk   Vylepšuje Chaturbate pridaním viacerých nových funkcií.
 // @description:sl   Poskytuje vám nový a vylepšený zážitok z chatrba.
 // @description:sv   Ger dig en ny och förbättrad chaturbate upplevelse.
-// @version        1.5.8
+// @version        1.5.9
 // @namespace      chaturbate_goes_Ladroop
 // @match          https://*chaturbate.com/*
 // @match          https://*.chaturbate.com/*
@@ -2788,6 +2788,7 @@
 
     function makejpgplayer(){
         var newelem=document.createElement('canvas');
+        newelem.id="canvasPlayer";
         newelem.width="854";
         newelem.height="480";
         newelem.id="profjpgimg";
@@ -2834,7 +2835,12 @@
         newdivelem.className="profdivplayer";
         newdivelem.style.width=vidwidth+"px";
         newdivelem.id="profplayer";
+        newdivelem.style.backgroundImage = "url('https://jpeg.live.mmcdn.com/minifwap/"+roomname+".jpg')";
+        newdivelem.style.backgroundPosition="center";
+        newdivelem.style.backgroundRepeat="no-repeat";
+        newdivelem.style.backgroundSize="cover";
         var newelem=document.createElement('video');
+        newelem.style.width="100%";
         newelem.controls=true;
         if (control.indexOf("true")!=-1){newelem.muted=true;}
         var volume=control.split(":")[1].split(",")[0];
@@ -2921,7 +2927,7 @@
         document.getElementById("vcontr").style.cursor="not-allowed";
         document.getElementById("vcontr2").style.cursor="not-allowed";
         document.getElementById("recbut").style.color="#990000";
-        if (!document.querySelector('canvas')){
+        if (!document.getElementById('canvasPlayer')){
             var video=document.querySelector('video');
             stream = video.captureStream ? video.captureStream() : video.mozCaptureStream();
             if (!video.captureStream) {
@@ -2930,7 +2936,7 @@
                 dest.connect(ctx.destination);
             }
         }
-        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder = new MediaRecorder(stream,{mimeType:'video/webm codecs="vp8" opus'});
         mediaRecorder.onstop = startDownload;
         mediaRecorder.ondataavailable = handleDataAvailable;
         try {
@@ -2953,12 +2959,12 @@
         recording=false;
         document.getElementById("vcontr").style.cursor="pointer";
         document.getElementById("vcontr2").style.cursor="pointer";
-        if (!document.querySelector('canvas')){
+        if (!document.getElementById('canvasPlayer')){
             removevidplayer();
             document.getElementById("controls").style.display="block";
             createimage();
         }
-        var blob = new Blob(recordedBlobs, {type: 'video/webm codecs="vp9" opus'});
+        var blob = new Blob(recordedBlobs, {type: 'video/webm'});
         var url = window.URL.createObjectURL(blob);
         var a = document.createElement('a');
         a.style.display = 'none';
@@ -3227,7 +3233,9 @@
          document.getElementsByClassName("defaultColor")[0].appendChild(newelem);
          var dmurl="messages/";
          if (document.getElementById("dmListIconRoot")){dmurl="dm/";}
-         wprof ("DM:","<a href='"+domain+dmurl+roomname+"/' id='dmpop'>Open window</a>");
+         wprof("Find:","<a href='https://camgirlfinder.net/models/cb/"+roomname+"' rel=noreferrer target='_new'>Open in camgirlfinder</a>");
+         wprof("Statistics:","<a href='https://statbate.com/search/1/"+roomname+"' rel=noreferrer target='_new'>Open in statbate</a>");
+         wprof("DM:","<a href='"+domain+dmurl+roomname+"/' id='dmpop'>Open window</a>");
          wprof("Video:",'<div id="rstatus"></div>');
          wprof("Video status:","<a href=# id='hls'>Update status</a>");
          wprof("Check:","Off <input type='range' id='pwalrm' min=0 max=1 value=0 style='width: 35px;height:auto;cursor: pointer'> On || Enter the room if you get access.");

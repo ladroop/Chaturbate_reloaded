@@ -9,7 +9,7 @@ Translate the chat in real time to your desired language.
 Show a lot of extra info in the bio.
 Ban/ignore rooms or users.
 
-Chaturbate reloaded userscript manual. V1.5.8
+Chaturbate reloaded userscript manual.
 
 *Settings menu (next to your user name where you can also set the dark mode).
 

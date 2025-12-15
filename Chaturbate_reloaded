@@ -59,7 +59,7 @@
 // @description:sk   Vylepšuje Chaturbate pridaním viacerých nových funkcií.
 // @description:sl   Poskytuje vám nový a vylepšený zážitok z chatrba.
 // @description:sv   Ger dig en ny och förbättrad chaturbate upplevelse.
-// @version        1.5.9
+// @version        1.6.0
 // @namespace      chaturbate_goes_Ladroop
 // @match          https://*chaturbate.com/*
 // @match          https://*.chaturbate.com/*
@@ -340,18 +340,11 @@
         }
         setTimeout(function(){
             if (container.getElementsByTagName("table").length>0){
-                nextcamfix();
                 dobiothings();
             }else{
                 test3();
             }
         }, 100);
-    }
-    function nextcamfix(){
-        if (document.querySelector('[data-paction="NextCam"')){
-            document.querySelector('[data-paction="NextCam"').getElementsByTagName("a")[0].addEventListener("click", regetpage);
-            document.querySelector('[data-paction="NextCam"').getElementsByTagName("a")[1].addEventListener("click", regetpage);
-        }
     }
     function cleanuppage(){
         observer3.disconnect();
@@ -865,6 +858,7 @@
             "#proftext {width: 200px; height: 45px; line-height: 14px; border-width: 1px; border-style: solid; border-color: #acacac; border-radius: 4px; padding: 7px 8px; overflow: auto;background-color: rgb(230, 230, 230);color:#000;min-width:200px;min-height:45px}"+
             ".darkmode #proftext{width: 200px; height: 45px; line-height: 14px; border-width: 1px; border-style: solid; border-color: #2d3e50; border-radius: 4px; padding: 7px 8px; overflow: auto;background-color: rgb(20,20,20);color:#fff;min-width:200px;min-height:45px}"+
             ".cbLogo {display:none !important}"+
+            ".overlay {display:none !important;}"+
             ".cleanprof .profpos {display:none !important}"+
             ".cleanprof .profmar {margin-top:0px !important;}"+
             ".cleanprof .profcur {cursor:default !important }"+
@@ -1923,6 +1917,12 @@
     }
 
     function varea(){
+        if (document.location.href.split("/")[3]!=roomname){
+            observer3.disconnect();
+            roomname=document.location.href.split("/")[3];
+            regetpage();
+            return;
+        }
         if((ppage)||(noaccess)){
             var video=document.getElementsByTagName("video")[0];
             video.style.filter=vfilter;
@@ -2788,7 +2788,6 @@
 
     function makejpgplayer(){
         var newelem=document.createElement('canvas');
-        newelem.id="canvasPlayer";
         newelem.width="854";
         newelem.height="480";
         newelem.id="profjpgimg";
@@ -2927,7 +2926,7 @@
         document.getElementById("vcontr").style.cursor="not-allowed";
         document.getElementById("vcontr2").style.cursor="not-allowed";
         document.getElementById("recbut").style.color="#990000";
-        if (!document.getElementById('canvasPlayer')){
+        if (!document.getElementById('profjpgimg')){
             var video=document.querySelector('video');
             stream = video.captureStream ? video.captureStream() : video.mozCaptureStream();
             if (!video.captureStream) {
@@ -2959,7 +2958,7 @@
         recording=false;
         document.getElementById("vcontr").style.cursor="pointer";
         document.getElementById("vcontr2").style.cursor="pointer";
-        if (!document.getElementById('canvasPlayer')){
+        if (!document.getElementById('profjpgimg')){
             removevidplayer();
             document.getElementById("controls").style.display="block";
             createimage();

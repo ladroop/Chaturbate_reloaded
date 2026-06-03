@@ -1,7 +1,31 @@
 // ==UserScript==
 // @name           Chaturbate reloaded
-// @description    See cam without being in chat • Write notes in thubnails • HQ Cam recording • Live thumbnail previews • Region and many more info in bio • Chat translate and cleanup • Status alert • Profile cleaner • Save media to disk • See what chatters are broadcasting • Video controls • Ban/ignore rooms
-// @version        1.7.1
+// @name:de        Chaturbate reloaded
+// @name:es        Chaturbate reloaded
+// @name:it        Chaturbate reloaded
+// @name:fr        Chaturbate reloaded
+// @name:ru        Chaturbate reloaded
+// @name:ro        Chaturbate reloaded
+// @name:nl        Chaturbate reloaded
+// @name:pl        Chaturbate reloaded
+// @name:ja        Chaturbate reloaded
+// @name:ko        Chaturbate reloaded
+// @name:pt-PT     Chaturbate reloaded
+// @name:zh        Chaturbate reloaded
+// @description    See cam without being in chat • Write notes in thumbnails • HQ Cam recording • Live thumbnail previews • Region and many more info in bio • Chat translate and cleanup • Status alert • Profile cleaner • Save media to disk • See what chatters are broadcasting • Video controls • Ban/ignore rooms
+// @description:de   Kameraansicht ohne Chat • Notizen in Miniaturansichten schreiben • Hochwertige Kameraaufzeichnung • Live-Vorschau von Miniaturansichten • Region und viele weitere Informationen in der Bio • Chat-Übersetzung und -Bereinigung • Statusbenachrichtigung • Profilbereinigung • Medien speichern • Sehen, was andere Chatter senden • Videosteuerung • Räume sperren/ignorieren
+// @description:es   Ver la cámara sin estar en el chat • Escribir notas en las miniaturas • Grabación de cámara en alta calidad • Vistas previas en miniatura en vivo • Región y mucha más información en la biografía • Traducción y limpieza del chat • Alerta de estado • Limpiador de perfil • Guardar contenido multimedia en el disco • Ver lo que transmiten los usuarios • Controles de video • Salas bloqueadas/ignoradas
+// @description:it   Visualizza la webcam senza essere in chat • Scrivi note nelle miniature • Registrazione webcam in alta qualità • Anteprime in tempo reale delle miniature • Regione e molte altre informazioni nella bio • Traduzione e pulizia della chat • Avviso di stato • Pulizia del profilo • Salva i contenuti multimediali su disco • Guarda cosa stanno trasmettendo gli utenti della chat • Controlli video • Blocca/ignora le stanze
+// @description:fr   Voir la webcam sans participer au chat • Écrire des notes dans les vignettes • Enregistrement vidéo en haute qualité • Aperçus en direct des vignettes • Région et autres informations dans la bio • Traduction et nettoyage du chat • Alertes de statut • Nettoyage du profil • Sauvegarde des médias sur disque • Voir les diffusions des autres utilisateurs • Commandes vidéo • Bannir/ignorer les salons
+// @description:ru   Смотрите трансляцию с камеры, не находясь в чате • Пишите заметки в миниатюрах • Запись с камеры высокого качества • Предварительный просмотр миниатюр в реальном времени • Регион и многое другое в биографии • Перевод и очистка чата • Оповещения о статусе • Очистка профиля • Сохранение медиафайлов на диск • Смотрите, что транслируют участники чата • Управление видео • Блокировка/игнорирование комнат
+// @description:ro   Vizualizați camera fără a fi în chat • Scrieți notițe în miniaturi • Înregistrare cameră HQ • Previzualizări live ale miniaturilor • Regiune și multe alte informații în biografie • Traducere și curățare chat • Alertă de stare • Curățare profil • Salvați fișiere media pe disc • Vedeți ce transmit participanții la chat • Comenzi video • Interziceți/ignorați camerele
+// @description:nl   Bekijk de webcam zonder in de chat te zijn • Schrijf notities in miniaturen • Opnames in hoge kwaliteit • Live voorbeelden van miniaturen • Regio en nog veel meer informatie in de bio • Chat vertalen en opschonen • Statusmeldingen • Profiel opschonen • Media opslaan op schijf • Zien wat chatters uitzenden • Video-instellingen • Kamers blokkeren/negeren
+// @description:pl   Oglądaj kamerę bez konieczności korzystania z czatu • Dodawaj notatki w miniaturach • Nagrywanie z kamery HQ • Podgląd na żywo w miniaturach • Region i wiele innych informacji w biografii • Tłumaczenie i czyszczenie czatu • Alert o statusie • Czyszczenie profilu • Zapisywanie multimediów na dysku • Zobacz, co transmitują uczestnicy czatu • Sterowanie wideo • Blokowanie/ignorowanie pokoi
+// @description:ja  チャットに参加せずにカメラを見る • サムネイルにメモを書き込む • 高画質カメラ録画 • ライブサムネイルプレビュー • プロフィールに地域情報など多数 • チャットの翻訳と整理 • ステータスアラート • プロフィールクリーナー • メディアをディスクに保存 • チャット参加者が配信している内容を確認 • ビデオコントロール • ルームの禁止/無視
+// @description:ko   채팅 참여 없이 캠 보기 • 썸네일에 메모 작성 • 고화질 캠 녹화 • 실시간 썸네일 미리보기 • 프로필에서 지역 및 기타 정보 확인 • 채팅 번역 및 정리 • 상태 알림 • 프로필 정리 • 미디어 디스크 저장 • 방송 중인 채팅 참여자 보기 • 비디오 제어 • 방 차단/무시
+// @description:pt-PT Ver a webcam sem estar no chat • Escrever notas nas miniaturas • Gravação da webcam em alta qualidade • Pré-visualizações em directo das miniaturas • Região e muito mais informação na bio • Tradução e limpeza do chat • Alerta de estado • Limpeza de perfil • Guardar media no disco • Ver o que os outros utilizadores estão a transmitir • Controlos de vídeo • Banir/ignorar salas
+// @description:zh   无需进入聊天室即可查看摄像头 • 在缩略图上添加备注 • 高清摄像头录制 • 实时缩略图预览 • 个人简介中包含地区等更多信息 • 聊天翻译和清理 • 状态提醒 • 个人资料清理 • 将媒体文件保存到磁盘 • 查看正在直播的用户 • 视频控制 • 屏蔽/忽略房间
+// @version        1.7.4
 // @namespace      chaturbate_goes_Ladroop
 // @match          https://*chaturbate.com/*
 // @match          https://*.chaturbate.com/*
@@ -26,7 +50,10 @@
     'use strict';
     var currpage=document.location.href;
     var roomname= currpage.split("/")[3];
-
+    if (!readCookie("ssession")){
+        localStorage.clear();
+        createCookie("ssession","foo");
+    }
     if (roomname=="messages"){
         if(window.opener){
             if (window.opener.innerWidth!=window.innerWidth){
@@ -64,7 +91,6 @@
     var note='<svg style="height: 2.0em; width: 2.0em;" viewBox="0 0 12 12" xmlns="https://www.w3.org/2000/svg"><path fill="hsla(0, 100%, 50%, 0.8)" d="M5.5 2.00002H2C1.73478 2.00002 1.48043 2.10537 1.29289 2.29291C1.10536 2.48044 1 2.7348 1 3.00002V10C1 10.2652 1.10536 10.5196 1.29289 10.7071C1.48043 10.8947 1.73478 11 2 11H9C9.26522 11 9.51957 10.8947 9.70711 10.7071C9.89464 10.5196 10 10.2652 10 10V6.50002" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.25 1.24985C9.44891 1.05094 9.7187 0.939194 10 0.939194C10.2813 0.939194 10.5511 1.05094 10.75 1.24985C10.9489 1.44877 11.0607 1.71855 11.0607 1.99985C11.0607 2.28116 10.9489 2.55094 10.75 2.74985L6 7.49985L4 7.99985L4.5 5.99985L9.25 1.24985Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
     var nonote='<svg style="height: 2.0em; width: 2.0em;" viewBox="0 0 12 12" xmlns="https://www.w3.org/2000/svg"><path fill="hsla(197, 10%, 98%, 0.3)" d="M5.5 2.00002H2C1.73478 2.00002 1.48043 2.10537 1.29289 2.29291C1.10536 2.48044 1 2.7348 1 3.00002V10C1 10.2652 1.10536 10.5196 1.29289 10.7071C1.48043 10.8947 1.73478 11 2 11H9C9.26522 11 9.51957 10.8947 9.70711 10.7071C9.89464 10.5196 10 10.2652 10 10V6.50002" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.25 1.24985C9.44891 1.05094 9.7187 0.939194 10 0.939194C10.2813 0.939194 10.5511 1.05094 10.75 1.24985C10.9489 1.44877 11.0607 1.71855 11.0607 1.99985C11.0607 2.28116 10.9489 2.55094 10.75 2.74985L6 7.49985L4 7.99985L4.5 5.99985L9.25 1.24985Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
     var notegrey='<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 12 12" role="img"><path stroke="#48484E" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.5 2H2a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V6.5"></path><path stroke="#48484E" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.25 1.25a1.06 1.06 0 0 1 1.5 1.5L6 7.5 4 8l.5-2z"></path></svg>';
-    var tour=domain+"in/?tour=4uT2&campaign=hgg5k&track=default";
     var sitelocation="";
     var username="anonymous";
     var supporter=false;
@@ -464,6 +490,11 @@
         document.getElementById("scriptcontrols").appendChild(newelem);
 
         newelem=document.createElement('span');
+        newelem.id="h9";
+        newelem.innerHTML="480px snapshots : <input type='range' id='a9' min=0 max=1 value=0 style='width: 40px;height:11px;cursor: pointer;float: right;accent-color: #f47321;'>";
+        document.getElementById("scriptcontrols").appendChild(newelem);
+
+        newelem=document.createElement('span');
         newelem.id="h7";
         newelem.innerHTML="Auto save recordings every 20 mins: <input type='range' id='a7' min=0 max=1 value=1 style='width: 40px;height:11px;cursor: pointer;float: right;accent-color: #f47321;'>";
         document.getElementById("scriptcontrols").appendChild(newelem);
@@ -515,10 +546,16 @@
         document.getElementById("a6").addEventListener("change",bigthumb);
         document.getElementById("a7").addEventListener("change",recautosave);
         document.getElementById("a8").addEventListener("change",recvp9);
+        document.getElementById("a9").addEventListener("change",smallsnap);
         setsw();
     }
 
     function setsw(){
+        if (localStorage.getItem("smallsnap")){
+            document.getElementById("a9").value=1;
+        }else{
+            document.getElementById("a9").value=0;
+        }
         if (localStorage.getItem("recvp9")){
             document.getElementById("a8").value=1;
         }else{
@@ -585,6 +622,13 @@
         }
     }
 
+    function smallsnap(){
+        if (document.getElementById("a9").value==1){
+            localStorage.setItem("smallsnap","foo");
+        }else{
+            localStorage.removeItem("smallsnap");
+        }
+    }
     function recvp9(){
         if (document.getElementById("a8").value==1){
             localStorage.setItem("recvp9","foo");
@@ -692,6 +736,10 @@
         if (localStorage.getItem("recvp9")){
             recvp9=1;
         }
+        var smallsnap=0;
+        if (localStorage.getItem("smallsnap")){
+            smallsnap=1;
+        }
         var isTheaterMode=localStorage.getItem("isTheaterMode");
         var defaultVideoWidth =localStorage.getItem("defaultVideoWidth");
         var videoControls =localStorage.getItem("videoControls");
@@ -705,6 +753,7 @@
             "#cleanprof#"+cleanprof+
             "#recautosave#"+recautosave+
             "#recvp9#"+recvp9+
+            "#smallsnap#"+smallsnap+
             "#isTheaterMode#"+isTheaterMode+
             "#defaultVideoWidth#"+defaultVideoWidth+
             "#videoControls#"+videoControls+
@@ -751,6 +800,7 @@
                 return;
             }
         }
+        localStorage.clear();
         localStorage.setItem("login","foo");
         var url=domain+"api/notes/for_user/"+stor+"/";
         fetch(url,{ credentials: "same-origin"}).then(
@@ -766,6 +816,7 @@
     }
 
     function restoresettings(data){
+        var resave=false;
         if (data.indexOf("good boy")!=0){return;}
         if (data.indexOf("refreshoff#")!=-1){
             var refreshoff=data.split("refreshoff#")[1].split("#")[0];
@@ -815,33 +866,48 @@
             localStorage.setItem("recvp9","foo");
             if (recvp9==0){localStorage.removeItem("recvp9");}
         }
+        if (data.indexOf("smallsnap#")!=-1){
+            var smallsnap=data.split("smallsnap#")[1].split("#")[0];
+            localStorage.setItem("smallsnap","foo");
+            if (smallsnap==0){localStorage.removeItem("smallsnap");}
+        }
         if (data.indexOf("isTheaterMode#")!=-1){
             var isTheaterMode=data.split("isTheaterMode#")[1].split("#")[0];
+            if (!jsontest(isTheaterMode)){resave=true;isTheaterMode='{"isTheaterMode":false}';}
             localStorage.setItem("isTheaterMode",isTheaterMode);
         }
         if (data.indexOf("defaultVideoWidth#")!=-1){
             var defaultVideoWidth=data.split("defaultVideoWidth#")[1].split("#")[0];
+            if (!jsontest(defaultVideoWidth)){resave=true;defaultVideoWidth='{"videoWidth":893,"videoHeight":502.3125,"lastChosenVideoWidth":902,"lastChosenChatWidth":962}';}
             localStorage.setItem("defaultVideoWidth",defaultVideoWidth);
         }
         if (data.indexOf("videoControls#")!=-1){
             var videoControls=data.split("videoControls#")[1].split("#")[0];
-            if (!jsontest(videoControls)){videoControls='{"volume":60,"isMuted":false}';}
+            if (!jsontest(videoControls)){resave=true;videoControls='{"volume":60,"isMuted":false}';}
             localStorage.setItem("videoControls",videoControls);
         }
         var exp=new Date().getTime()+86400000;
         if (data.indexOf("hpfltopen#")!=-1){
             var hpfltopen=data.split("hpfltopen#")[1].split("#")[0];
             hpfltopen=hpfltopen.split('expiration":')[0]+'expiration":'+exp+'}';
+            if (!jsontest(hpfltopen)){resave=true;hpfltopen='{"value":"true","expiration":2780331592470}';}
             localStorage.setItem("hpfltopen",hpfltopen);
         }
         if (data.indexOf("theme_name#")!=-1){
             var theme_name=data.split("theme_name#")[1].split("#")[0];
             createCookie("theme_name",theme_name);
         }
-        setTimeout(function(){document.location.reload();},200);
+        var outtime=500;
+        if (resave){
+            outtime=1000;
+            savesetting();
+        }
+        setTimeout(function(){document.location.reload();},outtime);
     }
 
     function jsontest(jsonstr){
+        if (jsonstr==""){return false;}
+        if (jsonstr==null){return false;}
         try {
             JSON.parse(jsonstr);
             return true;
@@ -933,8 +999,10 @@
             ".darkmode .darkselect{background-color: #202c39 !important; color:#b3b3b3 !important; border-color:#2d3e50 !important}"+//<<
             ".tinput {background-color: #dde9f5 !important; color:#5e81a4 !important; border-color:#8bb3da !important}"+
             ".darkmode .tinput {background-color: #202c39 !important; color:#b3b3b3 !important; border-color:#2d3e50 !important}"+
-            ".proftext {width: 200px; height: 45px; line-height: 14px; border-width: 1px; border-style: solid; border-color: #acacac; border-radius: 4px; padding: 7px 8px; overflow: auto;background-color: rgb(230, 230, 230);color:#000;min-width:200px;min-height:45px}"+
-            ".darkmode .proftext{width: 200px; height: 45px; line-height: 14px; border-width: 1px; border-style: solid; border-color: #2d3e50; border-radius: 4px; padding: 7px 8px; overflow: auto;background-color: rgb(20,20,20);color:#fff;min-width:200px;min-height:45px}"+
+            ".proftext {width: 350px; height: 45px; line-height: 14px; border-width: 1px; border-style: solid; border-color: #acacac; border-radius: 4px; padding: 7px 8px; overflow: auto;background-color: rgb(230, 230, 230);color:#000;min-width:200px;min-height:45px}"+
+            ".darkmode .proftext{width: 350px; height: 45px; line-height: 14px; border-width: 1px; border-style: solid; border-color: #2d3e50; border-radius: 4px; padding: 7px 8px; overflow: auto;background-color: rgb(20,20,20);color:#fff;min-width:200px;min-height:45px}"+
+            ".profbutton {border-width: 1px; border-style: solid; border-color: #acacac; border-radius: 4px;background-color: rgb(230, 230, 230);color:#000;}"+
+            ".darkmode .profbutton {border-color: #dddddd; border-radius: 4px;background-color: rgb(20,20,20);color:#fff;}"+
             ".cleanprof .profpos {display:none !important}"+
             ".cleanprof .profmar {margin-top:0px !important;}"+
             ".cleanprof .profcur{cursor:default !important }"+
@@ -946,8 +1014,8 @@
             ".bigThumb .RoomCardGrid{grid-template-columns:repeat(auto-fill, minmax(302px, 1fr)) !important}"+
             ".RoomCardGrid{grid-template-columns:repeat(auto-fill, minmax(174px, 1fr)) !important}"+
             ".RoomCardGrid {overflow:visible !important}"+
-            ".roomCard {transition: .5s}"+//nog voor profiel
-            ".roomCard:hover {border-color:red;z-index:50}"+//nog voor profiel
+            ".roomCard {transition: .5s}"+
+            ".roomCard:hover {border-color:red;z-index:50}"+
             ".RoomCard {transition: .5s}"+
             ".RoomCard:hover {border-color:red;z-index:20}"+
             ".thumbpage .content{overflow: visible; !important ;margin-right:12px !important;margin-left:12px !important}"+
@@ -964,6 +1032,7 @@
             ".scriptset {position:absolute;width:340px;padding:12px;top:80px;right:10px;z-index:9999;background-color:#fff;border:1px solid #efefef; border-radius:8px; box-shadow:0 0 8px 0 rgba(0,0,0,.2);}"+
             ".darkmode .scriptset {position:absolute;width:340px;padding:12px;top:80px;right:10px;z-index:9999;background-color:#17202a;border:1px solid #2d3e50; border-radius:8px; box-shadow:0px 4px 16px rgba(0,0,0,.24);}"+
             ".scriptset span{text-align: left; width: 310px;color: #fff; background-color: #0c6a93;padding: 4px 10px 3px;  position: relative;  border-radius: 10px; float: right;margin: 2px;}"+
+            ".HeaderUserProfileMenu {z-index:104}"+
             ".roomPage .main-content-wrapper{padding-left: 10px;padding-right: 0px !important}";
         document.getElementsByTagName('head')[0].appendChild(style);
     }
@@ -1607,13 +1676,20 @@
 
         newelem=document.createElement('span');
         newelem.setAttribute("style", cbutstyle);
-        newelem.innerHTML="MIRROR VIDEO";
+        newelem.innerHTML="RESET ALL";
+        newelem.addEventListener("click",vreset);
+        document.getElementById("controls").appendChild(newelem);
+
+
+        newelem=document.createElement('span');
+        newelem.setAttribute("style", cbutstyle);
+        newelem.innerHTML="MIRROR";
         newelem.addEventListener("click",mirror);
         document.getElementById("controls").appendChild(newelem);
 
         newelem=document.createElement('span');
         newelem.setAttribute("style", cbutstyle);
-        newelem.innerHTML="INVERT VIDEO";
+        newelem.innerHTML="INVERT";
         newelem.addEventListener("click",invert);
         document.getElementById("controls").appendChild(newelem);
 
@@ -1675,6 +1751,13 @@
 
         newelem=document.createElement('span');
         newelem.setAttribute("style", cbutstyle);
+        newelem.innerHTML="SNAPSHOT";
+        newelem.id="snapbut";
+        newelem.addEventListener("click",snapshot);
+        document.getElementById("controls").appendChild(newelem);
+
+        newelem=document.createElement('span');
+        newelem.setAttribute("style", cbutstyle);
         newelem.innerHTML="STOP RECORDING";
         newelem.id="stopbut";
         newelem.addEventListener("click",recstop);
@@ -1685,12 +1768,6 @@
         newelem.innerHTML="RECORD";
         newelem.id="recbut";
         newelem.addEventListener("click",recstart);
-        document.getElementById("controls").appendChild(newelem);
-
-        newelem=document.createElement('span');
-        newelem.setAttribute("style", cbutstyle);
-        newelem.innerHTML="RESET ALL";
-        newelem.addEventListener("click",vreset);
         document.getElementById("controls").appendChild(newelem);
 
         newelem=document.createElement('br');
@@ -1839,6 +1916,51 @@
         });
     }
 
+    function snapshot(){
+        document.getElementById("snapbut").removeEventListener("click",snapshot);
+        document.getElementById("snapbut").style.color="red";
+        var video = document.getElementsByTagName('video')[0];
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        var imgqual="0.95";
+        var fontsize=12;
+        if (video.videoWidth < video.videoHeight){
+            fontsize=6;
+        }
+        if (localStorage.getItem("smallsnap")){
+            imgqual="0.75";
+            if (video.videoWidth > video.videoHeight){
+                canvas.height = 480;
+                canvas.width=parseInt(video.videoWidth*480/video.videoHeight);
+            }else{
+                canvas.width = 480;
+                canvas.height = parseInt(video.videoHeight*480/video.videoWidth);
+
+            }
+        }
+        ctx.font=fontsize*canvas.height/480+"px Georgia";
+        ctx.drawImage(video, 0, 0,video.videoWidth,video.videoHeight,0,0,canvas.width,canvas.height);
+        ctx.fillStyle = "white";
+        ctx.fillText(roomname+"@chaturbate. Made with chaturbate reloaded userscript by Ladroop.",10,canvas.height-10);
+        var starttime=new Date().toISOString().split(".")[0]+"GMT";
+        starttime=starttime.replaceAll(":","-");
+        var snapname=roomname+"-"+starttime+".jpg";
+        canvas.toBlob(function(blob) {
+                GM_download({
+                    url: blob,
+                    name: snapname,
+                    onload: imgdlready
+                });
+        }, 'image/jpeg', imgqual);
+    }
+
+    function imgdlready(){
+        document.getElementById("snapbut").style.color="white";
+        document.getElementById("snapbut").addEventListener("click",snapshot);
+    }
+
     function getvid(){
         vareaid=document.getElementsByTagName("video")[0].id;
         observer3.observe(document.getElementsByTagName("video")[0].parentNode, observerConfig3);
@@ -1938,7 +2060,17 @@
             if (recording){return;}
             document.getElementById("controls").style.display="none";
         }else{
+            setres();
             document.getElementById("controls").style.display="block";
+        }
+    }
+
+    function setres(){
+        if (document.querySelector('[data-testid="quality-option"]')){
+            var voptions=document.querySelectorAll('[data-testid="quality-option"]');
+            if (voptions[voptions.length-1].style.color){
+                voptions[0].click();
+            }
         }
     }
 
@@ -2046,13 +2178,12 @@
                 }
             }
         }
-
         if (data.opt_out){
             wprof("On network sites:","No");
         }
         makerulesarea(data.chat_rules);
         if(data.chat_rules!=""){
-            wprof ("Chat rules:","<a href=# id='rulesview'>Yes, click to read</a>");
+            wprof ("Chat rules:","Yes <button type='button' class='profbutton' id='rulesview'>Show chatrules</button>");
             document.getElementById("rulesview").addEventListener("click",function(){
                 if(document.getElementById("rulespop").style.display=="none"){
                     document.getElementById("rulespop").innerHTML=chatrules;
@@ -2064,7 +2195,6 @@
                 }
             });
         }
-
         if(pageType=="ppage"){
             if(!noaccess){
                 if (data.following){
@@ -2087,7 +2217,7 @@
             }
         }
         if (data.num_viewers!=0){
-            wprof("Users in room:",data.num_viewers+"<a href=# id='userview' style='display:none'> (Show userlist.)</a>");
+            wprof("Users in room:",data.num_viewers+" <button class='profbutton' type='button' id='userview' style='display:none'> Show userlist.</button>");
             document.getElementById("userview").addEventListener("click",getuserlist);
         }else{
             wprof("Users in room:","0<a href=# id='userview' style='display:none'></a>");
@@ -2101,39 +2231,41 @@
         if (data.fan_club_is_member){
             wprof("Fanclub member:","Yes");
         }
-        if ((room_status=="offline")||(pageType=="ppage")){
-            wprof("Room topic:","<div style='width:450px;height:auto'>"+data.room_title+"</div>");
-        }
-        if (pageType=="ppage"){
-            if (room_status.indexOf("hidden")!=-1){
-                wprof("Hidden message:",data.hidden_message);
-            }
-        }
         videoSrc=data.hls_source;
-        wprof("Video:",'<div id="rstatus">'+room_status+'</div>');
-
-            if (data.is_age_verified){
-                wprof("Alarm:","<div id='alarm'><div>");
-                makealarm();
-            }
-
-        wprof("Video Url:","<a href=# id='hls'>Click to copy to clipboard/Update status</a>");
+        wprof("Room status:",'<span id="rstatus">'+room_status+'</span> <button class="profbutton" type="button" id="hls">Update/copy URL</button>');
         document.getElementById("hls").addEventListener("click",function(){getnewhls(!noaccess,true);});
+        if(document.querySelector('[data-testid="offline-content-container"]')){
+            if(document.querySelector('[data-testid="offline-content-container"]').style.display=="block"){
+                wprof("<div id='alarmmode1'>Status alarm mode:</div>","<div id='alarmmode'><input type='range' id='alrmtype' min=0 max=1 value=0 style='width: 35px;height:auto;cursor: pointer'> Reload if visible <-> Alarm on status change<div>");
+           }
+        }else{
+            if (videoSrc == ""){
+                wprof("<div id='alarmmode1'>Status alarm mode:</div>","<div id='alarmmode'><input type='range' id='alrmtype' min=0 max=1 value=0 style='width: 35px;height:auto;cursor: pointer'> Reload if visible <-> Alarm on status change<div>");
+            }
+        }
+        wprof("Status alarm:","<div><input type='range' id='alrm' min=0 max=1 value=0 style='width: 35px;height:auto;cursor: pointer'> Off <-> On<div>");
+        document.getElementById("alrm").addEventListener("change",setalrm);
+        document.title=ctitle;
         if (data.tips_in_past_24_hours !== 0){
             wprof("You tipped:",data.tips_in_past_24_hours+" Tk/24h");
         }
         wprof("Nationality:","<span id='flaginfo'>wait....</span>");
         wprof("Region:","<span id='regioninfo'>wait....</span>");
         getregion(false);
-
+        if (pageType=="ppage"){
+            if (room_status.indexOf("hidden")!=-1){
+                wprof("Hidden show message:",data.hidden_message);
+            }
+        }
+        if ((room_status=="offline")||(pageType=="ppage")){
+            wprof("Room topic:","<div style='width:450px;height:auto'>"+data.room_title+"</div>");
+        }
         if (biodata.performer_has_fanclub){
             wprof("Fanclub costs:",biodata.fan_club_cost*3+" Tk / 3 Months");
         }
-
         if (!data.is_age_verified){
             wprof("Status:","Exhibitionist");
         }else{
-
             if (data.allow_private_shows){
                 wprof("Private recording:",data.allow_show_recordings ? "Yes":"No");
                 if (data.spy_private_show_price!=0){
@@ -2198,23 +2330,9 @@
             });
     }
 
-    function makealarm(){
-        var newelem=document.createElement('span');
-        newelem.innerHTML="Off <input type='range' id='alrm' min=0 max=1 value=0 style='width: 35px;height:auto;cursor: pointer'> On <span id='aonly'>|| Alarm only <input type='range' id='alrmtype' min=0 max=1 value=0 style='width: 35px;height:auto;cursor: pointer'> Go to page if public</span>";
-        document.getElementById("alarm").appendChild(newelem);
-        document.getElementById("alrm").addEventListener("change",setalrm);
-        if(document.querySelector('[data-testid="offline-content-container"]')){
-            if(document.querySelector('[data-testid="offline-content-container"]').style.display=="none"){
-                document.getElementById("aonly").style.display="none";
-            }
-        }
-        document.title=ctitle;
-    }
-
     function setalrm(){
         if (document.getElementById("alrm").value==0){document.title=ctitle;return;}
         ctitle=document.title;
-        document.title="\u23F0 "+ctitle;
         getnewhls(true,false);
         setTimeout(function(){
             oldroomstatus=roomstatus;
@@ -2224,6 +2342,7 @@
     }
 
     function testalarm(){
+        document.title="\u23F0 "+ctitle;
         setTimeout(function(){
             if(document.getElementById("alrm").value==0){alarmrun=false;return;}
             getnewhls(true,false,2);
@@ -2232,19 +2351,30 @@
 
     function testalarm2(){
         if (roomstatus != oldroomstatus){
-            if(document.getElementById("alrmtype").value==1){
-                if (roomstatus=="public"){
-                    forceopen(roomname);
+            if (!document.getElementById("alrmtype")){
+                playalarm();
+                alarmtab();
+                alarmrun=false;
+            }else{
+                if(document.getElementById("alrmtype").value==0){
+                    if ((roomstatus=="public")||(roomstatus.indexOf("watching")!=-1)){
+                        if (pageType=="ppage"){
+                            window.focus();
+                            setTimeout(newinfo,1000);
+                            return;
+                        }
+                        forceopen(roomname);
+                    }
+                    oldroomstatus=roomstatus;
+                    if (alarmrun){
+                        testalarm();
+                        return;
+                    }
                 }
-                oldroomstatus=roomstatus;
-                if (alarmrun){
-                    testalarm();
-                    return;
-                }
+                playalarm();
+                alarmtab();
+                alarmrun=false;
             }
-            playalarm();
-            alarmtab();
-            alarmrun=false;
         }else{
             if (alarmrun){
                 testalarm();
@@ -3096,11 +3226,13 @@
         referenceNode.insertBefore(newtr, referenceNode.getElementsByTagName("tr")[2]);
     }
 
-    function newinfo(){
+    function newinfo(easy){
         if (fetching!==0){alert("Slow down !");return;}
         if (regiofetch){alert("Please wait !");return;}
         regiofetch=true;
-        localStorage.setItem("regloaded","bar");
+        if (easy!=1){
+            localStorage.setItem("regloaded","bar");
+        }
         if(document.getElementById("rulespop")){document.getElementById("rulespop").style.display="none";}
         var tags=document.getElementsByName("info");
   		for(i=tags.length-1;i>=0;i--){
@@ -3195,24 +3327,15 @@
         }
     }
 
-    function linkfix(){
+   function linkfix(){
         var bioarea= document.getElementsByClassName('BioContents')[0];
         var tags = bioarea.getElementsByTagName('a');
         for (i=0; i<tags.length; i++){
-            if (tags[i].href.indexOf("campaign=")!=-1){
-                tags[i].href=tour;
-            }
             if (tags[i].href.indexOf('?url=') != -1){
                 var linkout=decodeURIComponent(tags[i].href).split("?url=")[1];
-                if (linkout.indexOf("campaign=")!=-1){
-                    linkout=tour;
-                }
                 tags[i].href=linkout;
             }
          }
-        if(document.querySelector('[data-testid="sign-up-tab"]')){
-            document.querySelector('[data-testid="sign-up-tab"]').href=tour;
-        }
     }
 
     function collectiondownload(){
@@ -3322,7 +3445,7 @@
 
     function forceopen(room){
         window.focus();
-        document.location.href=domain+room;
+        setTimeout(function(){document.location.href=domain+room;},1000);
     }
 
     function opendm3(that){
@@ -3338,7 +3461,7 @@
                     setprofile();
                     return;
                 }else{
-                    document.location.href=domain+'p/'+username+'?tab=bio&model='+roomname; 
+                    document.location.href=domain+'p/'+username+'?tab=bio&model='+roomname;
                     return;
                 }
             });
@@ -3662,17 +3785,28 @@
                     getnewhls(false,clicked,next);
                     return;
                 }
-                document.getElementById("rstatus").innerHTML="Error";
                 document.getElementById("hls").innerHTML=oldmsg;
+                if (next==2){testalarm2();}
                 hlsfetching=false;
                 return;
             }
             response.json().then(function(data){
+                var oldstatus=document.getElementById("rstatus").innerHTML;
                 document.getElementById("rstatus").innerHTML=data.room_status;
                 document.getElementById("hls").innerHTML=oldmsg;
                 roomstatus=data.room_status;
                 room_status=data.room_status;
                 videoSrc=data.url;
+                if (pageType=="ppage"){
+                    if(!next){
+                        var cansee=true;
+                        var couldsee=false;
+                        if (data.url==""){cansee=false;}
+                        if (oldstatus=="public"){couldsee=true;}
+                        if (oldstatus.includes("watching")){couldsee=true;}
+                        if (couldsee != cansee){newinfo(1);}
+                    }
+                }
                 if (clicked){navigator.clipboard.writeText(videoSrc);}
                 hlsfetching=false;
                 if (next==1){createimage();}

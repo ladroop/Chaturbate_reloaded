@@ -25,12 +25,13 @@
 // @description:ko   채팅 참여 없이 캠 보기 • 썸네일에 메모 작성 • 고화질 캠 녹화 • 실시간 썸네일 미리보기 • 프로필에서 지역 및 기타 정보 확인 • 채팅 번역 및 정리 • 상태 알림 • 프로필 정리 • 미디어 디스크 저장 • 방송 중인 채팅 참여자 보기 • 비디오 제어 • 방 차단/무시
 // @description:pt-PT Ver a webcam sem estar no chat • Escrever notas nas miniaturas • Gravação da webcam em alta qualidade • Pré-visualizações em directo das miniaturas • Região e muito mais informação na bio • Tradução e limpeza do chat • Alerta de estado • Limpeza de perfil • Guardar media no disco • Ver o que os outros utilizadores estão a transmitir • Controlos de vídeo • Banir/ignorar salas
 // @description:zh   无需进入聊天室即可查看摄像头 • 在缩略图上添加备注 • 高清摄像头录制 • 实时缩略图预览 • 个人简介中包含地区等更多信息 • 聊天翻译和清理 • 状态提醒 • 个人资料清理 • 将媒体文件保存到磁盘 • 查看正在直播的用户 • 视频控制 • 屏蔽/忽略房间
-// @version        1.7.4
+// @version        1.8.0
 // @namespace      chaturbate_goes_Ladroop
 // @match          https://*chaturbate.com/*
 // @match          https://*.chaturbate.com/*
 // @exclude        https://secure.chaturbate.com/*
-// @exclude        https://*chaturbate.com/security/
+// @exclude        https://*chaturbate.com/security/*
+// @exclude        https://*chaturbate.com/auth/*
 // @exclude        https://*chaturbate.com/apps/*
 // @exclude        https://*chaturbate.com/api/*
 // @exclude        https://*chaturbate.com/b/*
@@ -41,6 +42,14 @@
 // @grant          GM_xmlhttpRequest
 // @grant          GM_download
 // @connect        translate.googleapis.com
+// @connect        www.camsoda.com
+// @connect        stripchat.com
+// @connect        bongacams.com
+// @connect        webchat.cam4.com
+// @connect        cam4.com
+// @connect        manifest-server.naiadsystems.com
+// @connect        api-edge.myfreecams.com
+// @connect        edgevideo.myfreecams.com
 // @run-at         document-end
 // @license	       MIT
 // @copyright      2026 Ladroop
@@ -91,6 +100,7 @@
     var note='<svg style="height: 2.0em; width: 2.0em;" viewBox="0 0 12 12" xmlns="https://www.w3.org/2000/svg"><path fill="hsla(0, 100%, 50%, 0.8)" d="M5.5 2.00002H2C1.73478 2.00002 1.48043 2.10537 1.29289 2.29291C1.10536 2.48044 1 2.7348 1 3.00002V10C1 10.2652 1.10536 10.5196 1.29289 10.7071C1.48043 10.8947 1.73478 11 2 11H9C9.26522 11 9.51957 10.8947 9.70711 10.7071C9.89464 10.5196 10 10.2652 10 10V6.50002" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.25 1.24985C9.44891 1.05094 9.7187 0.939194 10 0.939194C10.2813 0.939194 10.5511 1.05094 10.75 1.24985C10.9489 1.44877 11.0607 1.71855 11.0607 1.99985C11.0607 2.28116 10.9489 2.55094 10.75 2.74985L6 7.49985L4 7.99985L4.5 5.99985L9.25 1.24985Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
     var nonote='<svg style="height: 2.0em; width: 2.0em;" viewBox="0 0 12 12" xmlns="https://www.w3.org/2000/svg"><path fill="hsla(197, 10%, 98%, 0.3)" d="M5.5 2.00002H2C1.73478 2.00002 1.48043 2.10537 1.29289 2.29291C1.10536 2.48044 1 2.7348 1 3.00002V10C1 10.2652 1.10536 10.5196 1.29289 10.7071C1.48043 10.8947 1.73478 11 2 11H9C9.26522 11 9.51957 10.8947 9.70711 10.7071C9.89464 10.5196 10 10.2652 10 10V6.50002" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.25 1.24985C9.44891 1.05094 9.7187 0.939194 10 0.939194C10.2813 0.939194 10.5511 1.05094 10.75 1.24985C10.9489 1.44877 11.0607 1.71855 11.0607 1.99985C11.0607 2.28116 10.9489 2.55094 10.75 2.74985L6 7.49985L4 7.99985L4.5 5.99985L9.25 1.24985Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
     var notegrey='<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 12 12" role="img"><path stroke="#48484E" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.5 2H2a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V6.5"></path><path stroke="#48484E" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.25 1.25a1.06 1.06 0 0 1 1.5 1.5L6 7.5 4 8l.5-2z"></path></svg>';
+    var xlogo='<svg class="svg" width="30" height="30" fill="none" viewBox="0 0 30 30"><path d="M9.47 6.77 15.3 0h-1.4L8.85 5.88 4.81 0H.15l6.11 8.9L.15 16h1.38l5.35-6.21L11.14 16h4.67L9.47 6.77Zm-1.9 2.2-.61-.88-4.93-7.05h2.12l3.98 5.69.62.88 5.17 7.4h-2.13L7.58 8.97Z" fill-rule="nonzero" fill-opacity="1" fill="black" stroke="none"></path></svg>';
     var sitelocation="";
     var username="anonymous";
     var supporter=false;
@@ -195,8 +205,17 @@
     var roomthumbs="";
     var followstar="";
     var nrt=0;
+    var scBusy=false;
+    var csBusy=false;
+    var bcBusy=false;
+    var c4Busy=false;
+    var smBusy=false;
+    var mfcBusy=false;
     if (document.querySelector('[data-testid="close-entrance-terms"]')){
         document.querySelector('[data-testid="close-entrance-terms"]').click();
+    }
+    if (document.getElementsByClassName("dismiss_notice_tfa_and_email").length>0){
+        document.getElementsByClassName("dismiss_notice_tfa_and_email")[0].click();
     }
     if (document.getElementsByClassName("siteNotice").length>0){
         var links = document.getElementsByClassName("siteNotice")[0].getElementsByTagName("a");
@@ -251,18 +270,26 @@
         makeScriptMenu();
     }
     function makeScriptMenu(){
+        var newdiv=document.createElement('div');
+        newdiv.id="holdpage";
+        newdiv.className="holdpage";
+        document.getElementById("base").prepend(newdiv);
         var top="";
         if (login){
             top=document.querySelector('[data-testid="user-header-menu"]');
         }else{
             top=document.getElementsByClassName("HeaderTopRow__anon-buttons")[0];
         }
-        var newdiv=document.createElement('div');
+        newdiv=document.createElement('div');
         newdiv.id="scriptsettings";
         newdiv.className="HeaderUserProfileIconContainer";
         newdiv.title="Script menu";
         newdiv.innerHTML='<div class="HeaderUserProfileIcon" style="border-radius:25%;background:#a84808"><span class="HeaderUserProfileIcon__letter">&#128128</span></div>';
         newdiv.addEventListener("click",togglescriptMenu);
+        top.prepend(newdiv);
+        newdiv=document.createElement('div');
+        newdiv.className="HeaderUserProfileIconContainer";
+        newdiv.innerHTML='<div class="HeaderUserProfileIcon" style="border-radius:25%;background:#ffffff"><a title="Follow me on X" style="margin-top:15px;margin-left:13px" href="https://x.com/cbuserscript" target=_blank class="HeaderUserProfileIcon__letter">'+xlogo+'</a></div>';
         top.prepend(newdiv);
         moreoptions();
         getignorelist();
@@ -279,6 +306,7 @@
     }
     function pageevent(){
         if (sitelocation==document.location.href.split("/")[3]){return;}
+        document.getElementById("holdpage").style.display="block";
         pageobserver.disconnect();
         thumbobserver1.disconnect();
         document.querySelector('[data-testid="room-bio-tab-contents"]').innerHTML="";
@@ -292,6 +320,7 @@
         sitelocation=roomname;
         var newpageType="thumbs";
         if (document.getElementById("main")){
+            if (document.getElementById("main").innerHTML.includes("HTTP 404")){newpageType="notfound";}
             var mainClass=document.getElementById("main").classList;
             if (mainClass.contains("roomPage")){newpageType="profile";}
             if (mainClass.contains("discover")){newpageType="discover";}
@@ -308,7 +337,11 @@
                 document.getElementById("ignore").style.display="block";
             }
         }
+        if (pageType!="thumbs"){
+            document.getElementById("holdpage").style.display="none";
+        }
         if (pageType=="thumbs"){
+            setTimeout(function(){document.getElementById("holdpage").style.display="none";},4000);
             setTimeout(thumbpageset,500);
         }
         if (pageType=="profile"){
@@ -1001,8 +1034,9 @@
             ".darkmode .tinput {background-color: #202c39 !important; color:#b3b3b3 !important; border-color:#2d3e50 !important}"+
             ".proftext {width: 350px; height: 45px; line-height: 14px; border-width: 1px; border-style: solid; border-color: #acacac; border-radius: 4px; padding: 7px 8px; overflow: auto;background-color: rgb(230, 230, 230);color:#000;min-width:200px;min-height:45px}"+
             ".darkmode .proftext{width: 350px; height: 45px; line-height: 14px; border-width: 1px; border-style: solid; border-color: #2d3e50; border-radius: 4px; padding: 7px 8px; overflow: auto;background-color: rgb(20,20,20);color:#fff;min-width:200px;min-height:45px}"+
-            ".profbutton {border-width: 1px; border-style: solid; border-color: #acacac; border-radius: 4px;background-color: rgb(230, 230, 230);color:#000;}"+
+            ".profbutton {border-width: 1px; border-style: solid; border-color: #acacac; border-radius: 4px;background-color: rgb(230, 230, 230);color:#000;cursor: pointer;}"+
             ".darkmode .profbutton {border-color: #dddddd; border-radius: 4px;background-color: rgb(20,20,20);color:#fff;}"+
+            ".profbutton:hover:active {transform: scale(0.92)}"+
             ".cleanprof .profpos {display:none !important}"+
             ".cleanprof .profmar {margin-top:0px !important;}"+
             ".cleanprof .profcur{cursor:default !important }"+
@@ -1033,6 +1067,8 @@
             ".darkmode .scriptset {position:absolute;width:340px;padding:12px;top:80px;right:10px;z-index:9999;background-color:#17202a;border:1px solid #2d3e50; border-radius:8px; box-shadow:0px 4px 16px rgba(0,0,0,.24);}"+
             ".scriptset span{text-align: left; width: 310px;color: #fff; background-color: #0c6a93;padding: 4px 10px 3px;  position: relative;  border-radius: 10px; float: right;margin: 2px;}"+
             ".HeaderUserProfileMenu {z-index:104}"+
+            ".holdpage {position: fixed;  display: block; width: 100%; height: 100%; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0); z-index: 200; cursor: wait;}"+
+            ".InChatMessage {display:none}"+
             ".roomPage .main-content-wrapper{padding-left: 10px;padding-right: 0px !important}";
         document.getElementsByTagName('head')[0].appendChild(style);
     }
@@ -1052,6 +1088,7 @@
     }
 
     function addevent2(){
+        document.getElementById("holdpage").style.display="block";
         currpage=document.location.href;
         roomname= currpage.split("/")[3];
         thumbobserver1.disconnect();
@@ -1149,6 +1186,7 @@
                 }
             }
         }
+        document.getElementById("holdpage").style.display="none";
         showhidden();
     }
 
@@ -1986,10 +2024,10 @@
             document.querySelector('[data-testid="video-container"]').style.background="rgb(51, 51, 51)";
         }
         document.getElementById("vcontr").style.display="block";
-        if (!vnode.src){
-            document.getElementById("vcontr").style.display="none";
+            if (!vnode.src){
             if (recording){
-                setTimeout(function(){if (!recording){document.getElementById("controls").style.display="none";}},15000);
+                recstop();
+                setTimeout(function(){document.getElementById("controls").style.display="none";},5000);
             }else{
                 document.getElementById("controls").style.display="none";
             }
@@ -2178,6 +2216,18 @@
                 }
             }
         }
+        wprof("Myfreecams:","<a href='#' id='mfcName' rel=noreferrer target='_new'>dummy</a>&nbsp&nbsp<button type='button' class='profbutton' id='mfcCheck' > Check </button><span id=mfcStatus></span>","mfcProf");
+        document.getElementById("mfcProf").style.display="none";
+        wprof("Cam4:","<a href='#' id='c4Name' rel=noreferrer target='_new'>dummy</a>&nbsp&nbsp<button type='button' class='profbutton' id='c4Check' > Check </button><span id=c4Status></span>","c4Prof");
+        document.getElementById("c4Prof").style.display="none";
+        wprof("Bongacams:","<a href='#' id='bcName' rel=noreferrer target='_new'>dummy</a>&nbsp&nbsp<button type='button' class='profbutton' id='bcCheck' > Check </button><span id=bcStatus></span>","bcProf");
+        document.getElementById("bcProf").style.display="none";
+        wprof("Streamate:","<a href='#' id='smName' rel=noreferrer target='_new'>dummy</a>&nbsp&nbsp<button type='button' class='profbutton' id='smCheck' > Check </button><span id=smStatus></span>","smProf");
+        document.getElementById("smProf").style.display="none";
+        wprof("Camsoda:","<a href='#' id='csName' rel=noreferrer target='_new'>dummy</a>&nbsp&nbsp<button type='button' class='profbutton' id='csCheck' > Check </button><span id=csStatus></span>","csProf");
+        document.getElementById("csProf").style.display="none";
+        wprof("Stripchat:","<a href='#' id='scName' rel=noreferrer target='_new'>dummy</a>&nbsp&nbsp<button type='button' class='profbutton' id='scCheck' > Check </button><span id=scStatus></span>","scProf");
+        document.getElementById("scProf").style.display="none";
         if (data.opt_out){
             wprof("On network sites:","No");
         }
@@ -2809,7 +2859,7 @@
                 response.blob().then(
                     function(rawimg){
                         var imgsize=rawimg.size;
-                        if ((imgsize<9500)||(imgsize>9510)){
+                        if ((imgsize<4408)||(imgsize>4415)){
                             makeimg();
                         }else{
                             makecrd();
@@ -3161,11 +3211,13 @@
     function buildprofnote(){
         var subbutraw="<span id='profsubmit' style='color: rgb(255, 255, 255); background: rgb(244, 115, 33); font-family: UbuntuMedium, Helvetica, Arial, sans-serif; font-size: 12px; padding: 4px 10px 5px; position: relative; left: 120px; float: left; border-radius: 4px; cursor: pointer;'>Save</span>";
         wprof("",'<div width="200px" id="profnote" style="display:none"><a href=# id="profcancel">Cancel</a>'+subbutraw+'</div>');
-        wprof("Personal notes:","<textarea id='proftext' class='proftext' spellcheck='false' placeholder='Enter notes about this user (only seen by you)'></textarea>");
+//        wprof("Personal notes:","<textarea id='proftext' class='proftext' spellcheck='false' placeholder='Enter notes about this user (only seen by you)'></textarea>");
+        wprof("Personal notes:","<textarea id='proftext' class='proftext' spellcheck='false' placeholder='Enter notes about this user (only seen by you)\nWrite site short code (sc:, cs:, bc:, c4:, mfc:, sm:) and modelname to check if the model is online on other sites'></textarea>");
         document.getElementById("proftext").value=opennote;
         document.getElementById("proftext").addEventListener("input",profopenbutton);
         document.getElementById("profcancel").addEventListener("click",profclosebutton);
         document.getElementById("profsubmit").addEventListener("click",profsavenote);
+        setExtern();
     }
 
     function profsavenote(){
@@ -3204,9 +3256,69 @@
         document.getElementById("proftext").value=opennote;
     }
 
-    function wprof(col1,col2){
+    function setExtern(){
+        var testnote=opennote.toLowerCase().replaceAll((/[\r\n]+/g)," ");
+        if (testnote.includes("cs:")){
+            var csName=testnote.split("cs:")[1].split(" ")[0];
+            if (csName.length>2){
+                document.getElementById("csName").innerHTML=csName;
+                document.getElementById("csName").href="https://camsoda.com/"+csName;
+                document.getElementById("csCheck").addEventListener("click",function(){csCheck(csName);});
+                document.getElementById("csProf").style.display="";
+            }
+        }
+        if (testnote.includes("sc:")){
+            var scName=testnote.split("sc:")[1].split(" ")[0];
+            if (scName.length>2){
+                document.getElementById("scName").innerHTML=scName;
+                document.getElementById("scName").href="https://stripchat.com/"+scName;
+                document.getElementById("scCheck").addEventListener("click",function(){scCheck(scName);});
+                document.getElementById("scProf").style.display="";
+            }
+        }
+        if (testnote.includes("sm:")){
+            var smName=testnote.split("sm:")[1].split(" ")[0];
+            if (smName.length>2){
+                document.getElementById("smName").innerHTML=smName;
+                document.getElementById("smName").href="https://streamate.com/cam/"+smName;
+                document.getElementById("smCheck").addEventListener("click",function(){smCheck(smName);});
+                document.getElementById("smProf").style.display="";
+            }
+        }
+        if (testnote.includes("bc:")){
+            var bcName=testnote.split("bc:")[1].split(" ")[0];
+            if (bcName.length>2){
+                document.getElementById("bcName").innerHTML=bcName;
+                document.getElementById("bcName").href="https://bongacams.com/"+bcName;
+                document.getElementById("bcCheck").addEventListener("click",function(){bcCheck(bcName);});
+                document.getElementById("bcProf").style.display="";
+            }
+        }
+        if (testnote.includes("c4:")){
+            var c4Name=testnote.split("c4:")[1].split(" ")[0];
+            if (c4Name.length>2){
+                document.getElementById("c4Name").innerHTML=c4Name;
+                document.getElementById("c4Name").href="https://cam4.com/"+c4Name;
+                document.getElementById("c4Check").addEventListener("click",function(){c4Check(c4Name);});
+                document.getElementById("c4Prof").style.display="";
+            }
+        }
+        if (testnote.includes("mfc:")){
+            var mfcName=testnote.split("mfc:")[1].split(" ")[0];
+            if (mfcName.length>2){
+                document.getElementById("mfcName").innerHTML=mfcName;
+                document.getElementById("mfcName").href="https://myfreecams.com/#"+mfcName;
+                document.getElementById("mfcCheck").addEventListener("click",function(){mfcCheck(mfcName);});
+                document.getElementById("mfcProf").style.display="";
+            }
+        }
+
+    }
+
+    function wprof(col1,col2,id){
         var container=document.getElementsByClassName("BioContents")[0];
         var newtr=document.createElement('tr');
+        if (id){newtr.id=id;}
         newtr.setAttribute("style", "font-size: 14px; font-weight: normal; line-height: 15px; vertical-align: top; text-align: left;");
         newtr.setAttribute("name", "info");
         var newtd=document.createElement('td');
@@ -4231,6 +4343,334 @@
                 localStorage.setItem("ignoredusers",banusers.toString());
                 setTimeout(function(){document.location.href=domain;},200);
             });
+        });
+    }
+    function csCheck(model){
+        if (csBusy){return;}
+        csBusy=true;
+        setCsStatus("");
+        var scStatus="unkown";
+        url="https://www.camsoda.com/api/v1/chat/react/"+model+"?"+new Date().getTime();
+        GM_xmlhttpRequest({
+            method: "GET",
+            timeout: 5000,
+            mozAnon: true,
+            anonymous: true,
+            url: url,
+            onload: function(response) {
+                if (response.status !== 200){
+                    setCsStatus("error");
+                    return;
+                }
+                var result=JSON.parse(response.responseText);
+                scStatus=result.chat.status;
+                if (scStatus=="online"){
+                    scStatus="Online - playlist copied";
+                    var playlist="https://"+result.stream.edge_servers[0]+"/"+result.stream.stream_name+"_v1/index.m3u8?token="+result.stream.token;
+                    navigator.clipboard.writeText(playlist);
+                }
+                setCsStatus(scStatus);
+            },
+            ontimeout: function(){
+                setCsStatus("Timeout error");
+            }
+        });
+    }
+    function setCsStatus(csStatus){
+        document.getElementById("csStatus").innerHTML=" "+csStatus;
+        setTimeout(function(){csBusy=false;},1000);
+    }
+
+    function scCheck(model){
+        if (scBusy){return;}
+        scBusy=true;
+        setScStatus("");
+        var scStatus="unkown";
+        url="https://stripchat.com/api/front/v2/models/username/"+model+"/cam?"+new Date().getTime();
+        GM_xmlhttpRequest({
+            method: "GET",
+            timeout: 5000,
+            mozAnon: true,
+            anonymous: true,
+            url: url,
+            onload: function(response) {
+                if (response.status !== 200){
+                    setScStatus("error");
+                    return;
+                }else{
+                    var result=JSON.parse(response.responseText);
+                    scStatus=result.user.user.status;
+                    if (scStatus=="off"){
+                        scStatus="Offline";
+                    }
+                    if (scStatus=="public"){
+                        scStatus = "Online - playlist copied.";
+                        var scId=result.user.user.id;
+                        var playlist="https://edge-hls.growcdnssedge.com/hls/"+scId+"/master/"+scId+"_480p.m3u8";
+                        navigator.clipboard.writeText(playlist);
+                    }
+                    setScStatus(scStatus);
+                }
+            },
+            ontimeout: function(){
+                setScStatus("Timeout error");
+            }
+        });
+    }
+    function setScStatus(scStatus){
+        document.getElementById("scStatus").innerHTML=" "+scStatus;
+        setTimeout(function(){scBusy=false;},1000);
+    }
+
+    function smCheck(model){
+        if (smBusy){return;}
+        smBusy=true;
+        setSmStatus("");
+        var smStatus="Error";
+        url="https://manifest-server.naiadsystems.com/live/s:"+model+".json";
+        GM_xmlhttpRequest({
+            method: "GET",
+            timeout: 5000,
+            mozAnon: true,
+            anonymous: true,
+            url: url,
+            onload: function(response) {
+                if (response.status !== 200){
+                    smStatus="Offline";
+                }
+                if (response.status == 403){
+                    smStatus="Private";
+                }
+                if (response.status == 200){
+                    smStatus="Online - playlist copied";
+                    var result=JSON.parse(response.responseText);
+                    var playlist=result.formats["mp4-hls"].manifest;
+                    navigator.clipboard.writeText(playlist);
+                }
+                setSmStatus(smStatus);
+            },
+            ontimeout: function(){
+                setSmStatus("Timeout error");
+            }
+        });
+    }
+    function setSmStatus(smStatus){
+        document.getElementById("smStatus").innerHTML=" "+smStatus;
+        setTimeout(function(){smBusy=false;},1000);
+    }
+
+    function bcCheck(model){
+        if (bcBusy){return;}
+        bcBusy=true;
+        setBcStatus("");
+        var bcStatus="Online - playlist copied";
+        url="https://bongacams.com/tools/amf.php";
+        GM_xmlhttpRequest({
+            method: "POST",
+            timeout: 5000,
+            mozAnon: true,
+            anonymous: true,
+            url: url,
+            data: "method=getRoomData&args%5B%5D="+model+"&args%5B%5D=false&args%5B%5D=false",
+            referrer: "https://bongacams.com/"+model,
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                "X-Requested-With": "XMLHttpRequest",
+            },
+            credentials: "omit",
+            onload: function(response) {
+                    if (response.status !== 200){
+                        setBcStatus("Site error");
+                        return;
+                    }else{
+                        var result=JSON.parse(response.responseText);
+                         if (result.status=="error"){
+                            setBcStatus("Model not found");
+                            return;
+                        }
+                        var show=result.performerData.showType;
+                        if (show!="public"){bcStatus="Private";}
+                        if (show=="group"){bcStatus="Groupshow";}
+                        if (result.performerData.isAway==true){bcStatus="Away";}
+                        if (result.performerData.isOnline==false){bcStatus="Offline";}
+                        if (bcStatus=="Online - playlist copied"){
+                            var edge=result.localData.videoServerUrl;
+                            var playlist="https:"+edge+"/hls/stream_"+result.performerData.displayName+"/playlist.m3u8";
+                            navigator.clipboard.writeText(playlist);
+                        }
+                        setBcStatus(bcStatus);
+                    }
+            },
+            ontimeout: function(){
+                setBcStatus("Timeout error");
+            }
+        });
+    }
+    function setBcStatus(bcStatus){
+        document.getElementById("bcStatus").innerHTML=" "+bcStatus;
+        setTimeout(function(){bcBusy=false;},1000);
+    }
+
+    function c4Check(model){
+        if (c4Busy){return;}
+        c4Busy=true;
+        setC4Status("");
+        url="https://webchat.cam4.com/requestAccess?roomname="+model;
+        GM_xmlhttpRequest({
+            method: "GET",
+            timeout: 5000,
+            mozAnon: true,
+            anonymous: true,
+            url: url,
+            onload: function(response) {
+                if (response.status !== 200){
+                    setC4Status("Error");
+                    return;
+                }
+                var result=JSON.parse(response.responseText);
+                if (result.status=="roomOffline"){
+                    setC4Status("Offline");
+                    return;
+                }
+                if (result.privateStream==true){
+                    setC4Status("Private");
+                    return;
+                }
+                getC4Video(model);
+            },
+            ontimeout: function(){
+                setC4Status("Timeout error");
+            }
+        });
+    }
+    function setC4Status(c4Status){
+        document.getElementById("c4Status").innerHTML=" "+c4Status;
+        setTimeout(function(){c4Busy=false;},1000);
+    }
+
+    function getC4Video(model){
+        url="https://cam4.com/rest/v1.0/profile/"+model+"/streamInfo";
+        GM_xmlhttpRequest({
+            method: "GET",
+            timeout: 5000,
+            mozAnon: true,
+            anonymous: true,
+            url: url,
+            onload: function(response) {
+                if (response.status !== 200){
+                    setC4Status("Error");
+                    return;
+                }
+                var result=JSON.parse(response.responseText);
+                if (result.canUseCDN==false){
+                    setC4Status("Private");
+                    return;
+                }
+                if (!result.cdnURL){
+                    setC4Status("Connecting");
+                    return;
+                }
+                var playlist=result.cdnURL;
+                navigator.clipboard.writeText(playlist);
+                setC4Status("Online - playlist copied");
+            },
+            ontimeout: function(){
+                setC4Status("Timeout error");
+            }
+        });
+
+    }
+
+    function mfcCheck(model){
+        if (mfcBusy){return;}
+        mfcBusy=true;
+        setMfcStatus("");
+        url="https://api-edge.myfreecams.com/usernameLookup/"+model;
+        GM_xmlhttpRequest({
+            method: "GET",
+            timeout: 5000,
+            mozAnon: true,
+            anonymous: true,
+            url: url,
+            onload: function(response) {
+                if (response.status !== 200){
+                    setMfcStatus("Error");
+                    return;
+                }
+                var result=JSON.parse(response.responseText);
+                if (result.result.message != "user found"){
+                    setMfcStatus("User not found");
+                    return;
+                }
+                if (!result.result.user.sessions[0]){
+                    setMfcStatus("Offline");
+                    return;
+                }
+
+                var status=result.result.user.sessions[0].vstate;
+                if (status==0){
+                    var modelnr=result.result.user.id;
+                    var videoserver=result.result.user.sessions[0].server_name;
+                    var phase=result.result.user.sessions[0].phase;
+                    getmfcvideo(modelnr,videoserver,phase);
+                    return;
+                }
+                if (status==12){
+                    setMfcStatus("Private");
+                    return;
+                }
+                if (status==13){
+                    setMfcStatus("Group show");
+                    return;
+                }
+                if (status==14){
+                    setMfcStatus("Clubshow");
+                    return;
+                }
+                if (status==2){
+                    setMfcStatus("Not broadcasting");
+                    return;
+                }
+                if (status==90){
+                    setMfcStatus("Online - webcam off");
+                    return;
+                }
+                setMfcStatus("Unknown status "+status);
+
+            },
+            ontimeout: function(){
+                setMfcStatus("Timeout error");
+            }
+        });
+    }
+    function setMfcStatus(mfcStatus){
+        document.getElementById("mfcStatus").innerHTML=" "+mfcStatus;
+        setTimeout(function(){mfcBusy=false;},1000);
+    }
+    function getmfcvideo(modelnr,videoserver,phase){
+        modelnr=modelnr+100000000;
+        var servernr=videoserver.split("ideo")[1];
+        url="https://edgevideo.myfreecams.com/llhls/NxServer/"+servernr+"/ngrp:mfc_"+phase+modelnr+".f4v_cmaf/playlist.m3u8?nc=0.6190622874050598&v=1.97.23";
+        GM_xmlhttpRequest({
+            method: "GET",
+            timeout: 5000,
+            mozAnon: true,
+            anonymous: true,
+            url: url,
+            onload: function(response) {
+                if (response.status !== 200){
+                    setMfcStatus("Connecting or away");
+                    return;
+                }
+                data=response.responseText;
+                var chunk="chunklist"+data.split("chunklist")[1].split("m3u8")[0]+"m3u8";
+                var playlist="https://"+videoserver+".myfreecams.com/NxServer/ngrp:mfc_"+phase+modelnr+".f4v_cmaf/"+chunk+"?nc=0.813118007341&v=1.96";
+                setMfcStatus("Online - playlist copied");
+                navigator.clipboard.writeText(playlist);
+            },
+            ontimeout: function(){
+                setMfcStatus("Timeout error");
+            }
         });
     }
 

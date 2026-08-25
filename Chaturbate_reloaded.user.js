@@ -25,7 +25,7 @@
 // @description:ko   채팅 참여 없이 캠 보기 • 썸네일에 메모 작성 • 고화질 캠 녹화 • 실시간 썸네일 미리보기 • 프로필에서 지역 및 기타 정보 확인 • 채팅 번역 및 정리 • 상태 알림 • 프로필 정리 • 미디어 디스크 저장 • 방송 중인 채팅 참여자 보기 • 비디오 제어 • 방 차단/무시
 // @description:pt-PT Ver a webcam sem estar no chat • Escrever notas nas miniaturas • Gravação da webcam em alta qualidade • Pré-visualizações em directo das miniaturas • Região e muito mais informação na bio • Tradução e limpeza do chat • Alerta de estado • Limpeza de perfil • Guardar media no disco • Ver o que os outros utilizadores estão a transmitir • Controlos de vídeo • Banir/ignorar salas
 // @description:zh   无需进入聊天室即可查看摄像头 • 在缩略图上添加备注 • 高清摄像头录制 • 实时缩略图预览 • 个人简介中包含地区等更多信息 • 聊天翻译和清理 • 状态提醒 • 个人资料清理 • 将媒体文件保存到磁盘 • 查看正在直播的用户 • 视频控制 • 屏蔽/忽略房间
-// @version        1.8.0
+// @version        1.8.4
 // @namespace      chaturbate_goes_Ladroop
 // @match          https://*chaturbate.com/*
 // @match          https://*.chaturbate.com/*
@@ -57,6 +57,12 @@
 
 (function() {
     'use strict';
+    if (document.getElementById("sidebar-holder")){
+        return;
+    }
+    if (!readCookie("AG_Key")){
+        if (document.getElementById("age_gate_overlay")){return;}
+    }
     var currpage=document.location.href;
     var roomname= currpage.split("/")[3];
     if (!readCookie("ssession")){
@@ -4345,6 +4351,8 @@
             });
         });
     }
+
+
     function csCheck(model){
         if (csBusy){return;}
         csBusy=true;
@@ -4385,8 +4393,31 @@
         if (scBusy){return;}
         scBusy=true;
         setScStatus("");
+        url="https://stripchat.com/api/front/users/user-ids/"+model;
+        GM_xmlhttpRequest({
+            method: "GET",
+            timeout: 5000,
+            mozAnon: true,
+            anonymous: true,
+            url: url,
+            onload: function(response) {
+                 if (response.status !== 200){
+                    setScStatus("error");
+                    return;
+                }else{
+                    var result=JSON.parse(response.responseText);
+                    scCheck2(result.id);
+                }
+            },
+            ontimeout: function(){
+                setScStatus("Timeout error");
+            }
+        });
+    }
+
+    function scCheck2(id){
         var scStatus="unkown";
-        url="https://stripchat.com/api/front/v2/models/username/"+model+"/cam?"+new Date().getTime();
+        url="https://stripchat.com/api/front/v2/models/"+id+"/cam?"+new Date().getTime();
         GM_xmlhttpRequest({
             method: "GET",
             timeout: 5000,
